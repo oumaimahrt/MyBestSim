@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eSIM Market Dashboard – MyBestSim Test</title>
+  <meta name="description" content="Tableau de bord analytique des offres eSIM : comparaison de 4 403 plans chez 18 fournisseurs sur 54 destinations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    /* ── RESET & BASE ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0b0f1a;
+      --bg2:       #111827;
+      --bg3:       #1a2235;
+      --border:    #1e2d45;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --accent:    #3b82f6;
+      --accent2:   #06b6d4;
+      --green:     #10b981;
+      --yellow:    #f59e0b;
+      --red:       #ef4444;
+      --purple:    #8b5cf6;
+      --card-glow: 0 0 40px rgba(59,130,246,0.06);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ────────────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, #0d1b2e 0%, #0b1628 50%, #0f1f35 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+    .logo-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .logo span { color: var(--accent2); }
+    .header-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .header-badge {
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* ── MAIN LAYOUT ───────────────────────────────────── */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ── SECTION TITLE ─────────────────────────────────── */
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── KPI CARDS ─────────────────────────────────────── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .kpi-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+      box-shadow: var(--card-glow);
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(59,130,246,0.4);
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .kpi-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .kpi-value {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #ffffff, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .kpi-icon {
+      position: absolute;
+      top: 1.4rem; right: 1.5rem;
+      font-size: 1.4rem;
+      opacity: 0.3;
+    }
+
+    /* ── CHARTS GRID ───────────────────────────────────── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .chart-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--card-glow);
+    }
+    .chart-card.wide {
+      grid-column: span 2;
+    }
+    .chart-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .chart-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    canvas { max-height: 280px; }
+
+    /* ── INSIGHTS ──────────────────────────────────────── */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .insight-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem;
+      box-shadow: var(--card-glow);
+    }
+    .insight-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    .insight-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .insight-icon.green  { background: rgba(16,185,129,0.15); }
+    .insight-icon.yellow { background: rgba(245,158,11,0.15); }
+    .insight-icon.blue   { background: rgba(59,130,246,0.15); }
+    .insight-icon.purple { background: rgba(139,92,246,0.15); }
+    .insight-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .insight-body {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .insight-body strong { color: var(--text); }
+    .insight-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin: 2px;
+    }
+    .pill-green  { background: rgba(16,185,129,0.15); color: var(--green); }
+    .pill-yellow { background: rgba(245,158,11,0.15);  color: var(--yellow); }
+    .pill-blue   { background: rgba(59,130,246,0.15);  color: var(--accent); }
+    .pill-red    { background: rgba(239,68,68,0.12);   color: var(--red); }
+
+    /* ── FILTER BAR ────────────────────────────────────── */
+    .filter-bar {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .filter-group label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    select, input[type=range], input[type=number] {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    select:hover, input:hover { border-color: var(--accent); }
+    select:focus, input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
+
+    .filter-info {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-left: auto;
+      align-self: center;
+    }
+    .filter-info strong { color: var(--accent); }
+
+    .btn-reset {
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-reset:hover { background: rgba(59,130,246,0.2); }
+
+    /* ── TABLE ─────────────────────────────────────────── */
+    .table-wrapper {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--card-glow);
+      margin-bottom: 2rem;
+    }
+    .table-scroll { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    thead {
+      background: var(--bg3);
+    }
+    th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+      transition: color 0.15s;
+    }
+    th:hover { color: var(--text); }
+    th.sorted { color: var(--accent); }
+    th .sort-arrow { margin-left: 4px; opacity: 0.5; }
+    td {
+      padding: 10px 14px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .provider-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+    .provider-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .badge-5g   { background: rgba(139,92,246,0.18); color: var(--purple); }
+    .badge-4g   { background: rgba(59,130,246,0.15); color: var(--accent); }
+    .badge-best { background: rgba(16,185,129,0.18); color: var(--green); }
+    .badge-topup { background: rgba(245,158,11,0.15); color: var(--yellow); }
+    .badge-unlimited { background: rgba(236, 72, 153, 0.18); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.35); }
+    .badge-subtle { background: rgba(255, 255, 255, 0.05); color: var(--muted); font-size: 0.72rem; }
+    .search-input {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      outline: none;
+      min-width: 180px;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .btn-export {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--green);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-export:hover { background: rgba(16, 185, 129, 0.22); }
+
+
+    .ppg-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ppg-fill {
+      height: 4px;
+      background: linear-gradient(90deg, var(--green), var(--accent));
+      border-radius: 2px;
+      min-width: 4px;
+    }
+
+    .table-footer {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── SCROLLBAR ─────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .chart-card.wide { grid-column: span 1; }
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">📡</div>
+      eSIM Market <span>Dashboard</span>
+    </div>
+    <div class="header-meta">
+      Données : 18 fournisseurs · 5 056 offres · 54 destinations
+    </div>
+    <div class="header-badge">Test Recrutement – MyBestSim</div>
+  </div>
+</header>
+
+<div class="container">
+
+    <!-- KPI SECTION — 6 REQUIRED STATS -->
+  <div class="section-title">📊 Statistiques requises — Vue d'ensemble du catalogue (6 métriques obligatoires)</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">📋</div>
+      <div class="kpi-label">① Total produits eSIM</div>
+      <div class="kpi-value">5 056</div>
+      <div class="kpi-sub">4 403 à volume fixe + 653 illimités</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">💸</div>
+      <div class="kpi-label">② Produits &gt; 100€</div>
+      <div class="kpi-value">56</div>
+      <div class="kpi-sub">forfaits illimités 30j & régionaux</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📉</div>
+      <div class="kpi-label">③ Prix le plus bas</div>
+      <div class="kpi-value">5.36€</div>
+      <div class="kpi-sub">Mexique, Indonésie & Inde</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📈</div>
+      <div class="kpi-label">③ Prix le plus haut</div>
+      <div class="kpi-value">154.63€</div>
+      <div class="kpi-sub">offres quota : max 99.39€</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📡</div>
+      <div class="kpi-label">④ Moyenne data / carte</div>
+      <div class="kpi-value">14.49 Go</div>
+      <div class="kpi-sub">sur 4 403 offres à volume (1-50 Go)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">💶</div>
+      <div class="kpi-label">⑤ Prix moyen global</div>
+      <div class="kpi-value">29.30€</div>
+      <div class="kpi-sub">quota : 24.63€ · illimité : 60.81€</div>
+    </div>
+  </div>
+
+  <!-- BONUS KPIs -->
+  <div class="section-title">⭐ Bonus — Statistiques & Insights additionnels</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">🏢</div>
+      <div class="kpi-label">⑥ Fournisseurs analysés</div>
+      <div class="kpi-value">18</div>
+      <div class="kpi-sub">Airalo (722), Ubigi (562)... 4S (92)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">🌍</div>
+      <div class="kpi-label">Destinations couvertes</div>
+      <div class="kpi-value">54</div>
+      <div class="kpi-sub">pays & grandes régions du monde</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">⚡</div>
+      <div class="kpi-label">Couverture 5G</div>
+      <div class="kpi-value">34.7%</div>
+      <div class="kpi-sub">1 754 offres avec réseau 5G</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">🔄</div>
+      <div class="kpi-label">Offres rechargeables</div>
+      <div class="kpi-value">54.2%</div>
+      <div class="kpi-sub">2 738 offres avec top-up actif</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-label">Meilleur €/Go moyen</div>
+      <div class="kpi-value">2.90€</div>
+      <div class="kpi-sub">JamboSIM · moy. marché 3.22€</div>
+    </div>
+  </div>
+
+  <!-- CHARTS SECTION -->
+  <div class="section-title">📈 Analyse par fournisseur</div>
+  <div class="charts-grid">
+    <div class="chart-card wide">
+      <div class="chart-title">Nombre d'offres par fournisseur</div>
+      <div class="chart-sub">Volume de catalogue indexé par provider</div>
+      <canvas id="chartProviderCount"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Prix moyen au Go (€/Go)</div>
+      <div class="chart-sub">Efficacité tarifaire — du moins cher au plus cher</div>
+      <canvas id="chartPricePerGb"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Couverture 5G par fournisseur (%)</div>
+      <div class="chart-sub">Pourcentage d'offres 5G dans le catalogue</div>
+      <canvas id="chart5g"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Répartition 4G / 5G</div>
+      <div class="chart-sub">Vue globale du marché</div>
+      <canvas id="chartNetwork"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Top destinations par volume d'offres</div>
+      <div class="chart-sub">Les 12 destinations les mieux couvertes</div>
+      <canvas id="chartTopCountries"></canvas>
+    </div>
+  </div>
+
+  <!-- BUSINESS INSIGHTS -->
+  <div class="section-title">💡 Insights marché</div>
+  <div class="insights-grid">
+    <div class="insight-card">
+      <div class="insight-header">
+        <div class="insight-icon green">🏆</div>
+        <div class="insight-title">Meilleur rapport qualité-prix</div>
+      </div>
+      <div class="insight-body">
+        <strong>JamboSIM</strong> propose le meilleur prix au Go du marché à <span class="insight-pill pill-green">2.90 €/Go</span>, suivi de <strong>Yesim</strong> <span class="insight-pill pill-green">2.94€</span> et <strong>Ubigi</strong> <span class="insight-pill pill-green">3.03€</span>. À l'inverse, <strong>Airalo</strong> — le provider le plus connu — est aussi l'avant-dernier en efficacité tarifaire à <span class="insight-pill pill-yellow">3.38€/Go</span>.
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-header">
+        <div class="insight-icon blue">⚡</div>
+        <div class="insight-title">Opportunité 5G sous-exploitée</div>
+      </div>
+      <div class="insight-body">
+        Seulement <strong>34.7% des offres</strong> sont en 5G alors que l'infrastructure mondiale accélère. Les providers avec le plus fort taux 5G sont une minorité. <strong>Opportunité :</strong> filtrer et mettre en avant les offres 5G premium pour capter les voyageurs d'affaires.
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-header">
+        <div class="insight-icon yellow">🌍</div>
+        <div class="insight-title">L'Asie : destination la plus chère</div>
+      </div>
+      <div class="insight-body">
+        Les destinations régionales (Asie, Europe, Monde) ont les <strong>prix au Go les plus élevés</strong> du dataset : <span class="insight-pill pill-red">Asie 4.50€/Go</span>, <span class="insight-pill pill-red">Europe 4.24€/Go</span>. À l'inverse, <strong>Inde</strong> <span class="insight-pill pill-green">2.57€/Go</span> et <strong>Mexique</strong> <span class="insight-pill pill-green">2.65€/Go</span> sont les plus abordables.
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-header">
+        <div class="insight-icon purple">📦</div>
+        <div class="insight-title">Airalo : volume ≠ valeur</div>
+      </div>
+      <div class="insight-body">
+        Airalo domine avec <strong>722 offres</strong> (+28% vs le suivant), mais propose l'avant-dernier prix/Go du marché. Ce paradoxe illustre que <strong>notoriété et efficacité tarifaire sont décorrélées</strong> — un avantage clé pour un comparateur comme MyBestSim qui peut orienter vers de meilleures alternatives.
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARATEUR INTERACTIF -->
+  <div class="section-title">🔍 Comparateur interactif</div>
+  <div class="filter-bar">
+    <div class="filter-group">
+      <label for="filterSearch">Recherche</label>
+      <input type="text" id="filterSearch" class="search-input" placeholder="🔍 Pays, provider, SKU..." />
+    </div>
+    <div class="filter-group">
+      <label for="filterProvider">Fournisseur</label>
+      <select id="filterProvider">
+        <option value="">Tous les 18 providers</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="filterCountry">Destination</label>
+      <select id="filterCountry">
+        <option value="">Toutes les 54 destinations</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="filterDataType">Type de données</label>
+      <select id="filterDataType">
+        <option value="">Toutes les offres</option>
+        <option value="fixed">Volume défini (1 à 50 Go)</option>
+        <option value="unlimited">Data illimitée (♾️)</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="filterNetwork">Réseau</label>
+      <select id="filterNetwork">
+        <option value="">4G & 5G</option>
+        <option value="5G">5G uniquement</option>
+        <option value="4G">4G uniquement</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="filterTopup">Rechargeable</label>
+      <select id="filterTopup">
+        <option value="">Peu importe</option>
+        <option value="oui">Oui (Top-up)</option>
+        <option value="non">Non</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="filterMaxPrice">Prix max (€)</label>
+      <select id="filterMaxPrice">
+        <option value="">Sans limite</option>
+        <option value="10">≤ 10€</option>
+        <option value="20">≤ 20€</option>
+        <option value="30">≤ 30€</option>
+        <option value="50">≤ 50€</option>
+        <option value="75">≤ 75€</option>
+        <option value="100">≤ 100€</option>
+        <option value="over100">&gt; 100€ (56 offres)</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="filterSort">Trier par</label>
+      <select id="filterSort">
+        <option value="ppg_asc">Prix/Go ↑ (meilleur rapport)</option>
+        <option value="price_asc">Prix ↑</option>
+        <option value="price_desc">Prix ↓</option>
+        <option value="data_desc">Data ↓</option>
+        <option value="days_desc">Durée ↓</option>
+      </select>
+    </div>
+    <button class="btn-reset" onclick="resetFilters()">↺ Reset</button>
+    <button class="btn-export" onclick="exportFilteredCSV()">📥 Exporter CSV</button>
+    <div class="filter-info">
+      <strong id="resultCount">5 056</strong> offres affichées
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <div class="table-scroll">
+      <table id="offersTable">
+        <thead>
+          <tr>
+            <th>Fournisseur</th>
+            <th>Destination</th>
+            <th>Data</th>
+            <th>Durée</th>
+            <th>Prix</th>
+            <th>€/Go</th>
+            <th>Réseau</th>
+            <th>Top-up</th>
+            <th>Valeur</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div class="table-footer" id="tableFooter"></div>
+  </div>
+
+</div>
+
+<footer>
+  Dashboard construit à partir des données MyBestSim — 18 fournisseurs · 5 056 offres · 54 destinations.<br />
+  Réalisé par <strong>Oumaima Hrete</strong> · Test de recrutement Développeur IA & Automatisation · 2026
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA — embedded from CSV processing
+// ═══════════════════════════════════════════════════════
+const PROVIDER_COLORS = {
+  'Airalo':      '#3b82f6',
+  'Ubigi':       '#06b6d4',
+  'eSIMX':       '#8b5cf6',
+  'Saily':       '#ec4899',
+  'GigSky':      '#f59e0b',
+  'Nomad':       '#10b981',
+  'Instabridge':  '#f97316',
+  'aloSIM':      '#84cc16',
+  'Holafly':     '#14b8a6',
+  'Yesim':       '#e879f9',
+  'Jetpac':      '#fb923c',
+  'Truphone':    '#60a5fa',
+  'JamboSIM':    '#4ade80',
+  'Flexiroam':   '#facc15',
+  'Yatelo':      '#a78bfa',
+  'Maya Mobile': '#f472b6',
+  'Roamic':      '#2dd4bf',
+  '4S eSIM':     '#94a3b8',
+};
+
+const PROVIDER_STATS = {
+  'Airalo':      { count: 722, avg_price: 36.14, avg_price_per_gb: 3.38, pct_5g: 35.7, countries: 54 },
+  'Ubigi':       { count: 562, avg_price: 25.18, avg_price_per_gb: 3.03, pct_5g: 33.1, countries: 54 },
+  'eSIMX':       { count: 432, avg_price: 28.90, avg_price_per_gb: 3.15, pct_5g: 41.2, countries: 52 },
+  'Saily':       { count: 382, avg_price: 30.22, avg_price_per_gb: 3.22, pct_5g: 29.8, countries: 50 },
+  'GigSky':      { count: 342, avg_price: 27.45, avg_price_per_gb: 3.07, pct_5g: 31.0, countries: 53 },
+  'Nomad':       { count: 312, avg_price: 29.10, avg_price_per_gb: 3.12, pct_5g: 38.5, countries: 51 },
+  'Instabridge':  { count: 282, avg_price: 27.80, avg_price_per_gb: 3.19, pct_5g: 25.5, countries: 49 },
+  'aloSIM':      { count: 262, avg_price: 26.30, avg_price_per_gb: 3.16, pct_5g: 44.3, countries: 48 },
+  'Holafly':     { count: 242, avg_price: 28.90, avg_price_per_gb: 3.26, pct_5g: 32.2, countries: 45 },
+  'Yesim':       { count: 222, avg_price: 24.70, avg_price_per_gb: 2.94, pct_5g: 36.9, countries: 47 },
+  'Jetpac':      { count: 212, avg_price: 25.60, avg_price_per_gb: 3.07, pct_5g: 40.1, countries: 46 },
+  'Truphone':    { count: 202, avg_price: 32.10, avg_price_per_gb: 3.35, pct_5g: 28.7, countries: 44 },
+  'JamboSIM':    { count: 182, avg_price: 23.90, avg_price_per_gb: 2.90, pct_5g: 33.5, countries: 42 },
+  'Flexiroam':   { count: 172, avg_price: 26.80, avg_price_per_gb: 3.14, pct_5g: 29.1, countries: 41 },
+  'Yatelo':      { count: 162, avg_price: 27.50, avg_price_per_gb: 3.22, pct_5g: 42.6, countries: 40 },
+  'Maya Mobile': { count: 152, avg_price: 25.10, avg_price_per_gb: 3.14, pct_5g: 37.5, countries: 39 },
+  'Roamic':      { count: 122, avg_price: 26.40, avg_price_per_gb: 3.21, pct_5g: 30.3, countries: 38 },
+  '4S eSIM':     { count: 92,  avg_price: 28.20, avg_price_per_gb: 3.59, pct_5g: 26.1, countries: 35 },
+};
+
+const TOP_COUNTRIES = [
+  { country: 'Europe',           count: 206, providers: 18, avg_price_per_gb: 4.24, min_price: 8.90 },
+  { country: 'Asie',             count: 194, providers: 18, avg_price_per_gb: 4.50, min_price: 9.45 },
+  { country: 'Amérique du Nord', count: 192, providers: 18, avg_price_per_gb: 3.90, min_price: 8.50 },
+  { country: 'Monde',            count: 186, providers: 18, avg_price_per_gb: 3.92, min_price: 11.20 },
+  { country: 'Indonésie',        count: 104, providers: 18, avg_price_per_gb: 3.50, min_price: 5.36 },
+  { country: 'Arabie saoudite',  count: 102, providers: 17, avg_price_per_gb: 3.20, min_price: 6.10 },
+  { country: 'Singapour',        count: 99,  providers: 17, avg_price_per_gb: 3.30, min_price: 5.80 },
+  { country: 'Égypte',           count: 98,  providers: 17, avg_price_per_gb: 3.15, min_price: 5.90 },
+  { country: 'États-Unis',       count: 98,  providers: 18, avg_price_per_gb: 3.45, min_price: 6.20 },
+  { country: 'Kenya',            count: 96,  providers: 16, avg_price_per_gb: 3.10, min_price: 5.70 },
+  { country: 'Inde',             count: 94,  providers: 17, avg_price_per_gb: 2.57, min_price: 5.40 },
+  { country: 'Mexique',          count: 92,  providers: 18, avg_price_per_gb: 2.65, min_price: 5.36 },
+];
+
+// ═══════════════════════════════════════════════════════
+// CHART.JS DEFAULTS
+// ═══════════════════════════════════════════════════════
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = 'Inter';
+
+// ═══════════════════════════════════════════════════════
+// CHART 1 — Provider count
+// ═══════════════════════════════════════════════════════
+const providers = Object.keys(PROVIDER_STATS).sort((a,b) => PROVIDER_STATS[b].count - PROVIDER_STATS[a].count);
+new Chart(document.getElementById('chartProviderCount'), {
+  type: 'bar',
+  data: {
+    labels: providers,
+    datasets: [{
+      data: providers.map(p => PROVIDER_STATS[p].count),
+      backgroundColor: providers.map(p => PROVIDER_COLORS[p] + '99'),
+      borderColor: providers.map(p => PROVIDER_COLORS[p]),
+      borderWidth: 1,
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { maxRotation: 45 } },
+      y: { grid: { color: 'rgba(255,255,255,0.04)' }, beginAtZero: true }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// CHART 2 — Price per GB
+// ═══════════════════════════════════════════════════════
+const sortedByPPG = [...providers].sort((a,b) => PROVIDER_STATS[a].avg_price_per_gb - PROVIDER_STATS[b].avg_price_per_gb);
+new Chart(document.getElementById('chartPricePerGb'), {
+  type: 'bar',
+  data: {
+    labels: sortedByPPG,
+    datasets: [{
+      data: sortedByPPG.map(p => PROVIDER_STATS[p].avg_price_per_gb),
+      backgroundColor: sortedByPPG.map((p, i) => {
+        const ratio = i / sortedByPPG.length;
+        return `hsl(${145 - ratio * 100}, 70%, 50%, 0.6)`;
+      }),
+      borderColor: sortedByPPG.map((p, i) => {
+        const ratio = i / sortedByPPG.length;
+        return `hsl(${145 - ratio * 100}, 70%, 60%)`;
+      }),
+      borderWidth: 1,
+      borderRadius: 5,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: 'rgba(255,255,255,0.04)' }, min: 2.5, ticks: { callback: v => v + '€' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// CHART 3 — 5G percentage
+// ═══════════════════════════════════════════════════════
+const sortedBy5g = [...providers].sort((a,b) => PROVIDER_STATS[b].pct_5g - PROVIDER_STATS[a].pct_5g);
+new Chart(document.getElementById('chart5g'), {
+  type: 'bar',
+  data: {
+    labels: sortedBy5g,
+    datasets: [{
+      data: sortedBy5g.map(p => PROVIDER_STATS[p].pct_5g),
+      backgroundColor: sortedBy5g.map((_, i) => `rgba(139, 92, 246, ${0.4 + (sortedBy5g.length - i) / sortedBy5g.length * 0.5})`),
+      borderColor: '#8b5cf6',
+      borderWidth: 1,
+      borderRadius: 5,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: 'rgba(255,255,255,0.04)' }, max: 60, ticks: { callback: v => v + '%' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// CHART 4 — 4G vs 5G donut
+// ═══════════════════════════════════════════════════════
+new Chart(document.getElementById('chartNetwork'), {
+  type: 'doughnut',
+  data: {
+    labels: ['4G', '5G'],
+    datasets: [{
+      data: [3302, 1754],
+      backgroundColor: ['rgba(59,130,246,0.7)', 'rgba(139,92,246,0.7)'],
+      borderColor: ['#3b82f6', '#8b5cf6'],
+      borderWidth: 2,
+      hoverOffset: 8,
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '68%',
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { padding: 20, color: '#94a3b8', font: { size: 12 } }
+      }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// CHART 5 — Top countries
+// ═══════════════════════════════════════════════════════
+new Chart(document.getElementById('chartTopCountries'), {
+  type: 'bar',
+  data: {
+    labels: TOP_COUNTRIES.map(c => c.country),
+    datasets: [{
+      label: "Nb d'offres",
+      data: TOP_COUNTRIES.map(c => c.count),
+      backgroundColor: 'rgba(6,182,212,0.55)',
+      borderColor: '#06b6d4',
+      borderWidth: 1,
+      borderRadius: 5,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { maxRotation: 45 } },
+      y: { grid: { color: 'rgba(255,255,255,0.04)' }, beginAtZero: true }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// DATA & TABLE MANAGEMENT — Robust Dual Loader (JSON / CSV)
+// ═══════════════════════════════════════════════════════
+const CSV_FILES = [
+  '4sesim.csv','airalo.csv','alosim.csv','esimx.csv','flexiroam.csv',
+  'gigsky.csv','holafly.csv','instabridge.csv','jambosim.csv','jetpac.csv',
+  'maya.csv','nomad.csv','roamic.csv','saily.csv','truphone.csv',
+  'ubigi.csv','yatelo.csv','yesim.csv'
+];
+
+let ALL_OFFERS = [];
+let globalMinPPG = Infinity, globalMaxPPG = 0;
+let bestByCountry = {};
+
+function initData() {
+  // First attempt: Fast, unified data.json (1 HTTP request, instant)
+  fetch('data.json')
+    .then(res => {
+      if (!res.ok) throw new Error('data.json not found');
+      return res.json();
+    })
+    .then(data => {
+      ALL_OFFERS = data.offers.map(o => {
+        const isUnlimited = o.is_unlimited || !o.data_gb;
+        const gb = isUnlimited ? null : parseFloat(o.data_gb);
+        const ppg = (gb && gb > 0) ? parseFloat(o.ppg || (o.price / gb).toFixed(2)) : 0;
+        if (ppg > 0) {
+          globalMinPPG = Math.min(globalMinPPG, ppg);
+          globalMaxPPG = Math.max(globalMaxPPG, ppg);
+        }
+        return {
+          sku: o.sku || '',
+          provider: o.provider,
+          country: o.country,
+          country_code: o.country_code,
+          product_name: o.product_name || '',
+          data_gb: gb,
+          is_unlimited: isUnlimited,
+          days: parseInt(o.days) || 0,
+          price: parseFloat(o.price) || 0,
+          ppg: ppg,
+          network: o.network || '4G',
+          topup: o.topup || 'non'
+        };
+      });
+      populateFilters();
+      renderTable(ALL_OFFERS);
+    })
+    .catch(err => {
+      console.warn('Falling back to CSV parsing:', err.message);
+      loadAllCSVs();
+    });
+}
+
+function loadAllCSVs() {
+  let loaded = 0;
+  CSV_FILES.forEach(file => {
+    Papa.parse(`../data/${file}`, {
+      download: true,
+      header: true,
+      complete: function(results) {
+        results.data.forEach(row => {
+          if (!row.provider || !row.sku) return;
+          const isUnlimited = !row.data_gb || row.data_gb.trim() === '' || (row.product_name && row.product_name.toLowerCase().includes('illimité'));
+          const gb = isUnlimited ? null : parseFloat(row.data_gb) || null;
+          const price = parseFloat(row.price) || 0;
+          const ppg = (gb && gb > 0) ? parseFloat((price / gb).toFixed(2)) : 0;
+          if (ppg > 0) {
+            globalMinPPG = Math.min(globalMinPPG, ppg);
+            globalMaxPPG = Math.max(globalMaxPPG, ppg);
+          }
+          ALL_OFFERS.push({
+            sku: row.sku,
+            provider: row.provider,
+            country: row.country_name,
+            country_code: row.country_code,
+            product_name: row.product_name,
+            data_gb: gb,
+            is_unlimited: isUnlimited,
+            days: parseInt(row.validity_days) || 0,
+            price: price,
+            ppg: ppg,
+            network: row.network,
+            topup: (row.top_up || 'non').toLowerCase()
+          });
+        });
+        loaded++;
+        if (loaded === CSV_FILES.length) {
+          populateFilters();
+          renderTable(ALL_OFFERS);
+        }
+      }
+    });
+  });
+}
+
+function populateFilters() {
+  const providers = [...new Set(ALL_OFFERS.map(o => o.provider))].sort();
+  const countries = [...new Set(ALL_OFFERS.map(o => o.country))].sort((a,b) => a.localeCompare(b, 'fr'));
+  const pSel = document.getElementById('filterProvider');
+  const cSel = document.getElementById('filterCountry');
+  
+  // Clean before adding
+  pSel.innerHTML = '<option value="">Tous les 18 providers</option>';
+  cSel.innerHTML = '<option value="">Toutes les 54 destinations</option>';
+  
+  providers.forEach(p => { const o = new Option(p, p); pSel.append(o); });
+  countries.forEach(c => { const o = new Option(c, c); cSel.append(o); });
+}
+
+function getFiltered() {
+  const search   = (document.getElementById('filterSearch').value || '').trim().toLowerCase();
+  const provider = document.getElementById('filterProvider').value;
+  const country  = document.getElementById('filterCountry').value;
+  const dataType = document.getElementById('filterDataType').value;
+  const network  = document.getElementById('filterNetwork').value;
+  const topup    = document.getElementById('filterTopup').value;
+  const maxPriceVal = document.getElementById('filterMaxPrice').value;
+  const sort     = document.getElementById('filterSort').value;
+
+  let filtered = ALL_OFFERS.filter(o => {
+    if (search) {
+      const matchSearch = (o.country && o.country.toLowerCase().includes(search)) ||
+                          (o.provider && o.provider.toLowerCase().includes(search)) ||
+                          (o.product_name && o.product_name.toLowerCase().includes(search)) ||
+                          (o.sku && o.sku.toLowerCase().includes(search));
+      if (!matchSearch) return false;
+    }
+    if (provider && o.provider !== provider) return false;
+    if (country && o.country !== country) return false;
+    if (dataType === 'fixed' && (o.is_unlimited || !o.data_gb)) return false;
+    if (dataType === 'unlimited' && !o.is_unlimited) return false;
+    if (network && o.network !== network) return false;
+    if (topup && o.topup !== topup) return false;
+    if (maxPriceVal === 'over100') {
+      if (o.price <= 100) return false;
+    } else if (maxPriceVal) {
+      if (o.price > parseFloat(maxPriceVal)) return false;
+    }
+    return true;
+  });
+
+  // Sort
+  if (sort === 'ppg_asc') {
+    filtered.sort((a,b) => {
+      if (a.is_unlimited && !b.is_unlimited) return 1;
+      if (!a.is_unlimited && b.is_unlimited) return -1;
+      return a.ppg - b.ppg;
+    });
+  } else if (sort === 'price_asc') {
+    filtered.sort((a,b) => a.price - b.price);
+  } else if (sort === 'price_desc') {
+    filtered.sort((a,b) => b.price - a.price);
+  } else if (sort === 'data_desc') {
+    filtered.sort((a,b) => {
+      const da = a.is_unlimited ? 9999 : (a.data_gb || 0);
+      const db = b.is_unlimited ? 9999 : (b.data_gb || 0);
+      return db - da;
+    });
+  } else if (sort === 'days_desc') {
+    filtered.sort((a,b) => b.days - a.days);
+  }
+
+  return filtered;
+}
+
+function computeBestByCountry(offers) {
+  bestByCountry = {};
+  offers.forEach(o => {
+    if (o.ppg <= 0 || o.is_unlimited) return;
+    if (!bestByCountry[o.country] || o.ppg < bestByCountry[o.country]) {
+      bestByCountry[o.country] = o.ppg;
+    }
+  });
+}
+
+function renderTable(filtered) {
+  const MAX_ROWS = 250;
+  const tbody = document.getElementById('tableBody');
+  const footer = document.getElementById('tableFooter');
+  document.getElementById('resultCount').textContent = filtered.length.toLocaleString('fr');
+
+  computeBestByCountry(filtered);
+
+  const display = filtered.slice(0, MAX_ROWS);
+  tbody.innerHTML = display.map(o => {
+    const color = PROVIDER_COLORS[o.provider] || '#64748b';
+    const isBest = !o.is_unlimited && o.ppg > 0 && o.ppg === bestByCountry[o.country];
+    const ppgPct = (globalMaxPPG > globalMinPPG && o.ppg > 0)
+      ? Math.max(10, Math.min(100, ((o.ppg - globalMinPPG) / (globalMaxPPG - globalMinPPG)) * 100))
+      : 50;
+    const barColor = ppgPct < 33 ? '#10b981' : ppgPct < 66 ? '#f59e0b' : '#ef4444';
+
+    const dataDisplay = o.is_unlimited
+      ? `<span class="badge badge-unlimited">♾️ Illimité</span>`
+      : `<strong>${o.data_gb} Go</strong>`;
+
+    const ppgDisplay = o.is_unlimited
+      ? `<span class="badge badge-subtle">Illimité</span>`
+      : `<div class="ppg-bar">
+           <div class="ppg-fill" style="width:${ppgPct}%;background:${barColor}"></div>
+           <span style="font-size:0.75rem;color:${barColor};font-weight:600">${o.ppg.toFixed(2)}€</span>
+         </div>`;
+
+    return `<tr>
+      <td>
+        <div class="provider-tag">
+          <div class="provider-dot" style="background:${color}"></div>
+          ${o.provider}
+        </div>
+      </td>
+      <td>${o.country}</td>
+      <td>${dataDisplay}</td>
+      <td>${o.days}j</td>
+      <td><strong>${o.price.toFixed(2)}€</strong></td>
+      <td>${ppgDisplay}</td>
+      <td><span class="badge badge-${(o.network || '4G').toLowerCase()}">${o.network || '4G'}</span></td>
+      <td>${o.topup === 'oui' ? '<span class="badge badge-topup">✓ Top-up</span>' : '<span style="color:var(--muted);font-size:0.75rem">Non</span>'}</td>
+      <td>${isBest ? '<span class="badge badge-best">🏆 Meilleur</span>' : (o.is_unlimited ? '<span style="color:var(--muted);font-size:0.72rem">Max data</span>' : '')}</td>
+    </tr>`;
+  }).join('');
+
+  footer.textContent = filtered.length > MAX_ROWS
+    ? `Affichage des ${MAX_ROWS} premières offres sur ${filtered.length.toLocaleString('fr')} résultats. Utilisez les filtres ou la recherche pour affiner.`
+    : `${filtered.length} offre${filtered.length > 1 ? 's' : ''} correspondant${filtered.length > 1 ? 's' : ''} aux critères.`;
+}
+
+function applyFilters() {
+  renderTable(getFiltered());
+}
+
+function resetFilters() {
+  ['filterSearch', 'filterProvider', 'filterCountry', 'filterDataType', 'filterNetwork', 'filterTopup', 'filterMaxPrice'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('filterSort').value = 'ppg_asc';
+  renderTable(ALL_OFFERS);
+}
+
+function exportFilteredCSV() {
+  const list = getFiltered();
+  if (!list.length) {
+    alert('Aucune offre à exporter.');
+    return;
+  }
+  const headers = ['sku', 'provider', 'product_name', 'country', 'data_gb', 'is_unlimited', 'validity_days', 'price_eur', 'price_per_gb', 'network', 'top_up'];
+  const rows = list.map(o => [
+    `"${o.sku}"`,
+    `"${o.provider}"`,
+    `"${(o.product_name || '').replace(/"/g, '""')}"`,
+    `"${o.country}"`,
+    o.is_unlimited ? '"Illimité"' : (o.data_gb || ''),
+    o.is_unlimited ? 'oui' : 'non',
+    o.days,
+    o.price.toFixed(2),
+    o.is_unlimited ? '' : o.ppg.toFixed(2),
+    `"${o.network}"`,
+    `"${o.topup}"`
+  ]);
+  const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('
+');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `mybestsim_export_${list.length}_offres.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Attach listeners
+['filterProvider', 'filterCountry', 'filterDataType', 'filterNetwork', 'filterTopup', 'filterMaxPrice', 'filterSort'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('change', applyFilters);
+});
+
+const searchEl = document.getElementById('filterSearch');
+if (searchEl) {
+  let searchTimeout = null;
+  searchEl.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(applyFilters, 180);
+  });
+}
+
+// Launch
+initData();
+
+</script>
+</body>
+</html>
