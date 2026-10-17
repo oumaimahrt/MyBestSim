@@ -145,71 +145,6 @@
       flex-shrink: 0;
     }
 
-    /* ── PIPELINE & DATA QA CARD ───────────────────────── */
-    .qa-card {
-      background: #ffffff;
-      border: 1px solid var(--mbs-border);
-      border-radius: var(--mbs-radius);
-      padding: 1.25rem 1.6rem;
-      margin-bottom: 2rem;
-      box-shadow: var(--mbs-shadow);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.2rem;
-      border-left: 4px solid var(--mbs-accent);
-      position: relative;
-    }
-    .qa-info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
-      min-width: 280px;
-    }
-    .qa-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--mbs-ink);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .qa-desc {
-      font-size: 0.8rem;
-      color: var(--mbs-muted);
-      line-height: 1.5;
-    }
-    .qa-metrics {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      flex-wrap: wrap;
-    }
-    .qa-metric-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: #f8fbff;
-      border: 1px solid #e0f2fe;
-      border-radius: 10px;
-      padding: 6px 16px;
-    }
-    .qa-metric-val {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--mbs-primary-dark);
-      letter-spacing: -0.02em;
-    }
-    .qa-metric-lbl {
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: var(--mbs-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
     /* ── SMART AI PRESETS ──────────────────────────────── */
     .quick-filters {
       display: flex;
@@ -770,36 +705,6 @@
 </header>
 
 <div class="container">
-
-  <!-- PIPELINE & DATA QA CARD -->
-  <div class="qa-card">
-    <div class="qa-info">
-      <div class="qa-title">
-        <span style="font-size:1.2rem;">🛡️</span> Audit de Données & Pipeline Automatisé (Data QA)
-      </div>
-      <div class="qa-desc">
-        Pipeline quotidien <code>import_pipeline.py</code> : normalisation multi-fournisseurs, isolation sécurisée des <strong>653 forfaits illimités</strong> (sans division par zéro), réconciliation des <strong>56 forfaits premium &gt; 100€</strong> et contrôle d'intégrité à 100%.
-      </div>
-    </div>
-    <div class="qa-metrics">
-      <div class="qa-metric-item">
-        <span class="qa-metric-val">18 / 18</span>
-        <span class="qa-metric-lbl">Flux CSV Intégrés</span>
-      </div>
-      <div class="qa-metric-item">
-        <span class="qa-metric-val">5 056</span>
-        <span class="qa-metric-lbl">Offres Normalisées</span>
-      </div>
-      <div class="qa-metric-item">
-        <span class="qa-metric-val">0</span>
-        <span class="qa-metric-lbl">Anomalie Résiduelle</span>
-      </div>
-      <div class="qa-metric-item" style="border-color:#bbf7d0;background:#f0fdf4;">
-        <span class="qa-metric-val" style="color:#16a34a;">100%</span>
-        <span class="qa-metric-lbl" style="color:#15803d;">Intégrité Data</span>
-      </div>
-    </div>
-  </div>
 
   <!-- KPI SECTION — 6 REQUIRED STATS -->
   <div class="section-title" id="section-kpis">📊 Statistiques requises — Vue d'ensemble du catalogue (6 métriques obligatoires)</div>
