@@ -74,13 +74,75 @@ Grâce à un contrôle rigoureux du dataset, nous avons identifié et valorisé 
 
 ### Sujet : « Internet en croisière : quelle eSIM choisir ? »
 
-**Angle Stratégique :**
-L'article cible une requête à forte intention de recherche où les croisiéristes hésitent entre le Wi-Fi à bord (très cher, 20 à 35 €/jour) et le hors-forfait maritime satellite (pouvant dépasser 900 €).  
-L'article démontre avec pédagogie :
+**Démarche Méthodologique & Rédaction :**
+- **Analyse du besoin & cadrage :** Lecture attentive des consignes et identification des contraintes réelles du croisiériste (problématique haute mer vs escales).
+- **Recherche sémantique & benchmark SEO :** Exploration des intentions de recherche Google et des questions fréquentes (*People Also Ask*, requêtes associées : `internet en croisière esim`, `wifi paquebot croisière`, `quelle esim pour une croisière`).
+- **Définition des éléments techniques SEO :** Conception de la balise Title accrocheuse, méta-description orientée conversion, hiérarchie sémantique stricte (un seul H1, structure H2/H3 claire), balisage Schema.org JSON-LD FAQPage, et stratégie de liens d'affiliation intelligents.
+- **Rédaction assistée par IA & ancrage data :** Co-rédaction avec un prompt IA approfondi en s'appuyant directement sur les données réelles du catalogue analysé en Partie 1 (GigSky Cruise, Airalo, Saily, Ubigi...).
+- **Relecture critique & ton de marque :** Réécriture humaine pour garantir un ton chaleureux, transparent et accessible, parfaitement aligné avec la ligne éditoriale de MyBestSim.
+
+**Angle Stratégique de l'Article :**
 1. **La physique du réseau :** Pourquoi les eSIM terrestres classiques s'arrêtent à 12 milles des côtes.
 2. **Le piège satellite (*Cellular at Sea*) :** Comment les factures à 1 000 € se produisent et comment s'en prémunir.
 3. **Le combo gagnant :** eSIM Régionale pour les escales (90% du besoin réel) + Mode Avion en mer = 15-25 € pour toute la croisière au lieu de 200 €.
 4. **Le cas GigSky Cruise :** La seule eSIM avec accords maritimes pour les voyageurs devant rester connectés au large.
 5. **Comparatif complet des offres réelles :** Airalo, Saily, Ubigi, Holafly, Yesim, GigSky.
-6. **Balises Schema.org FAQPage :** Intégrées pour capter les Rich Snippets Google et les réponses IA (ChatGPT, Google AI Overviews).
+6. **Balises Schema.org FAQPage :** Intégrées pour capter les Rich Snippets Google et les réponses des moteurs IA (Google AI Overviews, ChatGPT).
+
+**Liens & Formats Livrés :**
+- 🌐 **Article en ligne (URL Optimisée SEO) :** [https://mybestsim-green.vercel.app/articles/internet-croisiere-quelle-esim-choisir](https://mybestsim-green.vercel.app/articles/internet-croisiere-quelle-esim-choisir)
+- 📝 **Version Markdown pour CMS :** [`article/article_seo_croisiere.md`](article/article_seo_croisiere.md)
+- 📄 **Version Web HTML intégrée :** [`article/article_seo_croisiere.html`](article/article_seo_croisiere.html)
+
+---
+
+## 🤖 Partie 3 : Méthodologie & Usage de l'IA
+
+Chez MyBestSim, le travail quotidien s'effectue en binôme avec des agents IA. Voici comment ce test a été abordé :
+
+1. **L'IA comme accélérateur de prototypage :** Exploration rapide de la structure des 18 CSV, génération du premier jet du script Python, maquettage dynamique Chart.js et extraction des intentions de recherche SEO.
+2. **Le développeur comme pilote et garant métier :**
+   - **Détection et résolution d'un biais critique de données :** L'analyse initiale automatisée avait ignoré les forfaits sans quota numérique (653 forfaits illimités), créant un faux résultat (0 produit > 100 €). Mon analyse critique a permis d'identifier la faille, d'adapter le pipeline et d'assurer une intégrité analytique absolue.
+   - **Conception produit & UX :** Refonte complète de l'interface aux couleurs officielles de MyBestSim, intégration d'un comparateur interactif avec filtres multi-critères, recherche en temps réel et export CSV.
+   - **SEO technique à haute valeur ajoutée :** Structuration de l'article autour de la véritable contrainte maritime, intégration du schéma JSON-LD FAQPage et configuration d'un slug SEO propre.
+
+---
+
+## ✉️ Email Final Prêt à Envoyer
+
+**À :** `mybestsim.business@gmail.com`  
+**Objet :** Test technique Stagiaire Développeur IA & Automatisation – Oumaima Hrete  
+
+```text
+Bonjour Etienne,
+
+Merci pour ce test stimulant et très proche des réalités quotidiennes du produit MyBestSim.
+
+Voici mes livrables pour l'ensemble des parties du test :
+
+🔗 1. Dashboard Data & Automatisation
+• Dashboard en ligne : https://mybestsim-green.vercel.app
+• Code source GitHub : https://github.com/oumaimahrt/MyBestSim
+
+Les 6 statistiques demandées y sont mises en valeur dès le premier coup d'œil, complétées par un comparateur interactif (recherche instantanée, filtres multi-critères, gestion des forfaits illimités, export CSV) et 5 graphiques d'analyse de marché Chart.js reprenant l'identité visuelle officielle de MyBestSim.
+Un point marquant relevé lors du traitement des données : le catalogue compte 5 056 offres, dont 653 forfaits illimités. Les 56 produits à plus de 100 € se trouvent parmi ces forfaits illimités (allant jusqu'à 154,63 €), tandis que les forfaits à quota fixe plafonnent à 99,39 € avec une moyenne de 14,49 Go. Le pipeline et le dashboard distinguent clairement ces deux segments pour une rigueur analytique maximale.
+
+📄 2. Article SEO : « Internet en croisière : quelle eSIM choisir ? »
+• Article en ligne (Slug SEO) : https://mybestsim-green.vercel.app/articles/internet-croisiere-quelle-esim-choisir
+• Formats Markdown et HTML disponibles dans le dépôt (/article).
+
+L'article adopte le ton transparent et pratique de MyBestSim : il résout le vrai dilemme du voyageur (le piège méconnu du roaming maritime satellite à 1 000 € vs le coût du Wi-Fi à bord), détaille la stratégie "eSIM régionale en escale + mode avion en mer", compare les offres réelles de notre dataset (GigSky Cruise, Airalo, Saily, Ubigi, Holafly...), et intègre le balisage structuré Schema.org FAQPage (JSON-LD) pour ranker en Rich Snippets Google et dans les moteurs IA.
+
+🤖 3. Sur l'utilisation de l'IA pendant le test :
+J'ai abordé ce test en binôme avec un agent IA, exactement comme dans votre quotidien chez MyBestSim. L'agent a été un excellent accélérateur pour explorer les 18 fichiers CSV, prototyper l'interface et analyser la concurrence SEO. Mon rôle a été de piloter rigoureusement le processus : corriger le biais initial d'ingestion sur les forfaits illimités pour garantir la justesse des métriques, architecturer un dashboard résilient avec double chargement JSON/CSV, et orienter l'article SEO vers les véritables contraintes techniques maritimes.
+
+Je reste à votre entière disposition pour échanger lors de l'entretien visio.
+
+Bien cordialement,
+Oumaima Hrete
+Étudiante à 42 Lyon
+Portfolio : https://oumaimahreteportfolio.vercel.app
+GitHub : https://github.com/oumaimahrt
+```
+
 
