@@ -854,6 +854,7 @@
   Réalisé par <strong>Oumaima Hrete</strong> · Test de recrutement Développeur IA & Automatisation · 2026
 </footer>
 
+<script src="data.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════
 // DATA — embedded from CSV processing
@@ -879,7 +880,7 @@ const PROVIDER_COLORS = {
   '4S eSIM':     '#94a3b8',
 };
 
-const PROVIDER_STATS = {
+const STATIC_PROVIDER_STATS = {
   'Airalo':      { count: 722, avg_price: 36.14, avg_price_per_gb: 3.38, pct_5g: 35.7, countries: 54 },
   'Ubigi':       { count: 562, avg_price: 25.18, avg_price_per_gb: 3.03, pct_5g: 33.1, countries: 54 },
   'eSIMX':       { count: 432, avg_price: 28.90, avg_price_per_gb: 3.15, pct_5g: 41.2, countries: 52 },
@@ -900,7 +901,7 @@ const PROVIDER_STATS = {
   '4S eSIM':     { count: 92,  avg_price: 28.20, avg_price_per_gb: 3.59, pct_5g: 26.1, countries: 35 },
 };
 
-const TOP_COUNTRIES = [
+const STATIC_TOP_COUNTRIES = [
   { country: 'Europe',           count: 206, providers: 18, avg_price_per_gb: 4.24, min_price: 8.90 },
   { country: 'Asie',             count: 194, providers: 18, avg_price_per_gb: 4.50, min_price: 9.45 },
   { country: 'Amérique du Nord', count: 192, providers: 18, avg_price_per_gb: 3.90, min_price: 8.50 },
@@ -914,6 +915,14 @@ const TOP_COUNTRIES = [
   { country: 'Inde',             count: 94,  providers: 17, avg_price_per_gb: 2.57, min_price: 5.40 },
   { country: 'Mexique',          count: 92,  providers: 18, avg_price_per_gb: 2.65, min_price: 5.36 },
 ];
+
+const PROVIDER_STATS = (window.__DASHBOARD_DATA__ && window.__DASHBOARD_DATA__.provider_stats)
+  ? window.__DASHBOARD_DATA__.provider_stats
+  : STATIC_PROVIDER_STATS;
+
+const TOP_COUNTRIES = (window.__DASHBOARD_DATA__ && window.__DASHBOARD_DATA__.top_countries)
+  ? window.__DASHBOARD_DATA__.top_countries
+  : STATIC_TOP_COUNTRIES;
 
 // ═══════════════════════════════════════════════════════
 // CHART.JS DEFAULTS & GLOBAL THEMING
@@ -1152,42 +1161,52 @@ let globalMinPPG = Infinity, globalMaxPPG = 0;
 let bestByCountry = {};
 
 function initData() {
+  if (window.__DASHBOARD_DATA__ && window.__DASHBOARD_DATA__.offers) {
+    console.log('✅ Chargement direct via data.js (' + window.__DASHBOARD_DATA__.offers.length + ' offres)');
+    loadOffersPayload(window.__DASHBOARD_DATA__.offers);
+    return;
+  }
   fetch('data.json')
     .then(res => {
       if (!res.ok) throw new Error('data.json not found');
       return res.json();
     })
     .then(data => {
-      ALL_OFFERS = data.offers.map(o => {
-        const isUnlimited = o.is_unlimited || !o.data_gb;
-        const gb = isUnlimited ? null : parseFloat(o.data_gb);
-        const ppg = (gb && gb > 0) ? parseFloat(o.ppg || (o.price / gb).toFixed(2)) : 0;
-        if (ppg > 0) {
-          globalMinPPG = Math.min(globalMinPPG, ppg);
-          globalMaxPPG = Math.max(globalMaxPPG, ppg);
-        }
-        return {
-          sku: o.sku || '',
-          provider: o.provider,
-          country: o.country,
-          country_code: o.country_code,
-          product_name: o.product_name || '',
-          data_gb: gb,
-          is_unlimited: isUnlimited,
-          days: parseInt(o.days) || 0,
-          price: parseFloat(o.price) || 0,
-          ppg: ppg,
-          network: o.network || '4G',
-          topup: o.topup || 'non'
-        };
-      });
-      populateFilters();
-      applyFilters();
+      console.log('✅ Chargement via fetch data.json (' + data.offers.length + ' offres)');
+      loadOffersPayload(data.offers);
     })
     .catch(err => {
       console.warn('Fallback to CSV parsing:', err.message);
       loadAllCSVs();
     });
+}
+
+function loadOffersPayload(offers) {
+  ALL_OFFERS = offers.map(o => {
+    const isUnlimited = o.is_unlimited || !o.data_gb;
+    const gb = isUnlimited ? null : parseFloat(o.data_gb);
+    const ppg = (gb && gb > 0) ? parseFloat(o.ppg || (o.price / gb).toFixed(2)) : 0;
+    if (ppg > 0) {
+      globalMinPPG = Math.min(globalMinPPG, ppg);
+      globalMaxPPG = Math.max(globalMaxPPG, ppg);
+    }
+    return {
+      sku: o.sku || '',
+      provider: o.provider,
+      country: o.country,
+      country_code: o.country_code,
+      product_name: o.product_name || '',
+      data_gb: gb,
+      is_unlimited: isUnlimited,
+      days: parseInt(o.days) || 0,
+      price: parseFloat(o.price) || 0,
+      ppg: ppg,
+      network: o.network || '4G',
+      topup: o.topup || 'non'
+    };
+  });
+  populateFilters();
+  applyFilters();
 }
 
 function loadAllCSVs() {

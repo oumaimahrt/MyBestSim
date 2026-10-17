@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-10-17T00:33:57.373910",
+    "generated_at": "2026-10-17T16:31:56.101155",
     "pipeline_author": "Oumaima Hrete",
     "system": "MyBestSim Daily Ingestion Pipeline"
   },
@@ -35,8 +35,10 @@
       "min_price": 5.38,
       "max_price": 136.98,
       "avg_ppg": 3.38,
+      "avg_price_per_gb": 3.38,
       "pct_5g": 30.2,
-      "countries_count": 54
+      "countries_count": 54,
+      "countries": 54
     },
     "Ubigi": {
       "count": 562,
@@ -46,8 +48,10 @@
       "min_price": 5.39,
       "max_price": 142.88,
       "avg_ppg": 3.03,
+      "avg_price_per_gb": 3.03,
       "pct_5g": 37.7,
-      "countries_count": 54
+      "countries_count": 54,
+      "countries": 54
     },
     "eSIMX": {
       "count": 432,
@@ -57,8 +61,10 @@
       "min_price": 5.36,
       "max_price": 136.53,
       "avg_ppg": 3.15,
+      "avg_price_per_gb": 3.15,
       "pct_5g": 37.3,
-      "countries_count": 54
+      "countries_count": 54,
+      "countries": 54
     },
     "Saily": {
       "count": 382,
@@ -68,8 +74,10 @@
       "min_price": 5.49,
       "max_price": 142.02,
       "avg_ppg": 3.22,
+      "avg_price_per_gb": 3.22,
       "pct_5g": 35.9,
-      "countries_count": 54
+      "countries_count": 54,
+      "countries": 54
     },
     "GigSky": {
       "count": 342,
@@ -79,8 +87,10 @@
       "min_price": 5.36,
       "max_price": 149.53,
       "avg_ppg": 3.07,
+      "avg_price_per_gb": 3.07,
       "pct_5g": 34.5,
-      "countries_count": 53
+      "countries_count": 53,
+      "countries": 53
     },
     "Nomad": {
       "count": 312,
@@ -90,8 +100,10 @@
       "min_price": 5.38,
       "max_price": 130.15,
       "avg_ppg": 3.12,
+      "avg_price_per_gb": 3.12,
       "pct_5g": 35.6,
-      "countries_count": 53
+      "countries_count": 53,
+      "countries": 53
     },
     "Instabridge": {
       "count": 282,
@@ -101,8 +113,10 @@
       "min_price": 5.4,
       "max_price": 141.03,
       "avg_ppg": 3.19,
+      "avg_price_per_gb": 3.19,
       "pct_5g": 31.9,
-      "countries_count": 53
+      "countries_count": 53,
+      "countries": 53
     },
     "aloSIM": {
       "count": 262,
@@ -112,8 +126,10 @@
       "min_price": 5.36,
       "max_price": 154.63,
       "avg_ppg": 3.16,
+      "avg_price_per_gb": 3.16,
       "pct_5g": 39.3,
-      "countries_count": 54
+      "countries_count": 54,
+      "countries": 54
     },
     "Holafly": {
       "count": 242,
@@ -123,8 +139,10 @@
       "min_price": 5.37,
       "max_price": 126.91,
       "avg_ppg": 3.26,
+      "avg_price_per_gb": 3.26,
       "pct_5g": 34.3,
-      "countries_count": 54
+      "countries_count": 54,
+      "countries": 54
     },
     "Yesim": {
       "count": 222,
@@ -134,8 +152,10 @@
       "min_price": 5.36,
       "max_price": 153.22,
       "avg_ppg": 2.94,
+      "avg_price_per_gb": 2.94,
       "pct_5g": 35.6,
-      "countries_count": 53
+      "countries_count": 53,
+      "countries": 53
     },
     "Jetpac": {
       "count": 212,
@@ -145,8 +165,10 @@
       "min_price": 5.53,
       "max_price": 135.33,
       "avg_ppg": 3.07,
+      "avg_price_per_gb": 3.07,
       "pct_5g": 30.7,
-      "countries_count": 54
+      "countries_count": 54,
+      "countries": 54
     },
     "Truphone": {
       "count": 202,
@@ -156,8 +178,10 @@
       "min_price": 5.47,
       "max_price": 152.96,
       "avg_ppg": 3.35,
+      "avg_price_per_gb": 3.35,
       "pct_5g": 37.1,
-      "countries_count": 52
+      "countries_count": 52,
+      "countries": 52
     },
     "JamboSIM": {
       "count": 182,
@@ -167,8 +191,10 @@
       "min_price": 5.46,
       "max_price": 140.24,
       "avg_ppg": 2.9,
+      "avg_price_per_gb": 2.9,
       "pct_5g": 33.5,
-      "countries_count": 51
+      "countries_count": 51,
+      "countries": 51
     },
     "Flexiroam": {
       "count": 172,
@@ -178,8 +204,10 @@
       "min_price": 5.38,
       "max_price": 134.79,
       "avg_ppg": 3.14,
+      "avg_price_per_gb": 3.14,
       "pct_5g": 34.9,
-      "countries_count": 54
+      "countries_count": 54,
+      "countries": 54
     },
     "Yatelo": {
       "count": 162,
@@ -189,8 +217,10 @@
       "min_price": 5.54,
       "max_price": 143.83,
       "avg_ppg": 3.22,
+      "avg_price_per_gb": 3.22,
       "pct_5g": 35.2,
-      "countries_count": 46
+      "countries_count": 46,
+      "countries": 46
     },
     "Maya Mobile": {
       "count": 152,
@@ -200,8 +230,10 @@
       "min_price": 5.98,
       "max_price": 141.99,
       "avg_ppg": 3.14,
+      "avg_price_per_gb": 3.14,
       "pct_5g": 34.2,
-      "countries_count": 45
+      "countries_count": 45,
+      "countries": 45
     },
     "Roamic": {
       "count": 122,
@@ -211,8 +243,10 @@
       "min_price": 5.95,
       "max_price": 147.07,
       "avg_ppg": 3.21,
+      "avg_price_per_gb": 3.21,
       "pct_5g": 33.6,
-      "countries_count": 49
+      "countries_count": 49,
+      "countries": 49
     },
     "4S eSIM": {
       "count": 92,
@@ -222,8 +256,10 @@
       "min_price": 5.6,
       "max_price": 128.8,
       "avg_ppg": 3.59,
+      "avg_price_per_gb": 3.59,
       "pct_5g": 33.7,
-      "countries_count": 46
+      "countries_count": 46,
+      "countries": 46
     }
   },
   "top_countries": [
@@ -232,135 +268,165 @@
       "code": "EU",
       "count": 206,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 42.74,
       "min_price": 7.52,
-      "avg_ppg": 4.24
+      "avg_ppg": 4.24,
+      "avg_price_per_gb": 4.24
     },
     {
       "country": "Asie",
       "code": "AS",
       "count": 194,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 40.9,
       "min_price": 7.49,
-      "avg_ppg": 4.5
+      "avg_ppg": 4.5,
+      "avg_price_per_gb": 4.5
     },
     {
       "country": "Amérique du Nord",
       "code": "NA",
       "count": 192,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 42.04,
       "min_price": 7.6,
-      "avg_ppg": 3.9
+      "avg_ppg": 3.9,
+      "avg_price_per_gb": 3.9
     },
     {
       "country": "Monde",
       "code": "WW",
       "count": 186,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 44.41,
       "min_price": 7.91,
-      "avg_ppg": 3.92
+      "avg_ppg": 3.92,
+      "avg_price_per_gb": 3.92
     },
     {
       "country": "Indonésie",
       "code": "ID",
       "count": 104,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 24.0,
       "min_price": 5.38,
-      "avg_ppg": 3.5
+      "avg_ppg": 3.5,
+      "avg_price_per_gb": 3.5
     },
     {
       "country": "Arabie saoudite",
       "code": "SA",
       "count": 102,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 25.35,
       "min_price": 5.52,
-      "avg_ppg": 2.92
+      "avg_ppg": 2.92,
+      "avg_price_per_gb": 2.92
     },
     {
       "country": "Singapour",
       "code": "SG",
       "count": 99,
       "providers_count": 16,
+      "providers": 16,
       "avg_price": 27.06,
       "min_price": 5.47,
-      "avg_ppg": 2.98
+      "avg_ppg": 2.98,
+      "avg_price_per_gb": 2.98
     },
     {
       "country": "Égypte",
       "code": "EG",
       "count": 98,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 28.01,
       "min_price": 5.38,
-      "avg_ppg": 3.14
+      "avg_ppg": 3.14,
+      "avg_price_per_gb": 3.14
     },
     {
       "country": "États-Unis",
       "code": "US",
       "count": 98,
       "providers_count": 17,
+      "providers": 17,
       "avg_price": 26.67,
       "min_price": 5.37,
-      "avg_ppg": 2.86
+      "avg_ppg": 2.86,
+      "avg_price_per_gb": 2.86
     },
     {
       "country": "Kenya",
       "code": "KE",
       "count": 96,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 29.86,
       "min_price": 5.39,
-      "avg_ppg": 2.92
+      "avg_ppg": 2.92,
+      "avg_price_per_gb": 2.92
     },
     {
       "country": "Belgique",
       "code": "BE",
       "count": 96,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 27.67,
       "min_price": 5.38,
-      "avg_ppg": 2.95
+      "avg_ppg": 2.95,
+      "avg_price_per_gb": 2.95
     },
     {
       "country": "Colombie",
       "code": "CO",
       "count": 95,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 31.87,
       "min_price": 5.36,
-      "avg_ppg": 2.65
+      "avg_ppg": 2.65,
+      "avg_price_per_gb": 2.65
     },
     {
       "country": "Turquie",
       "code": "TR",
       "count": 93,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 27.7,
       "min_price": 5.48,
-      "avg_ppg": 2.9
+      "avg_ppg": 2.9,
+      "avg_price_per_gb": 2.9
     },
     {
       "country": "Pays-Bas",
       "code": "NL",
       "count": 93,
       "providers_count": 18,
+      "providers": 18,
       "avg_price": 22.53,
       "min_price": 5.52,
-      "avg_ppg": 3.21
+      "avg_ppg": 3.21,
+      "avg_price_per_gb": 3.21
     },
     {
       "country": "Rép. dominicaine",
       "code": "DO",
       "count": 92,
       "providers_count": 16,
+      "providers": 16,
       "avg_price": 25.14,
       "min_price": 5.81,
-      "avg_ppg": 3.29
+      "avg_ppg": 3.29,
+      "avg_price_per_gb": 3.29
     }
   ],
   "offers": [

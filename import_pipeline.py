@@ -206,8 +206,10 @@ def run_import_pipeline(data_directory="data", output_path="dashboard/data.json"
             'min_price': round(min(s['prices']), 2),
             'max_price': round(max(s['prices']), 2),
             'avg_ppg': avg_ppg,
+            'avg_price_per_gb': avg_ppg,
             'pct_5g': pct_5g,
-            'countries_count': len(s['countries'])
+            'countries_count': len(s['countries']),
+            'countries': len(s['countries'])
         }
         print(f"     • {p:<14} : {s['count']:>3} offres | Moy: {final_providers[p]['avg_price']:>5.2f} € | {avg_ppg:>4.2f} €/Go | 5G: {pct_5g:>4.1f}%")
 
@@ -220,13 +222,15 @@ def run_import_pipeline(data_directory="data", output_path="dashboard/data.json"
             'code': s['code'],
             'count': s['count'],
             'providers_count': len(s['providers']),
+            'providers': len(s['providers']),
             'avg_price': round(sum(s['prices']) / len(s['prices']), 2),
             'min_price': round(min(s['prices']), 2),
-            'avg_ppg': avg_ppg
+            'avg_ppg': avg_ppg,
+            'avg_price_per_gb': avg_ppg
         })
     final_countries.sort(key=lambda x: -x['count'])
 
-    # 7. Export JSON pour le Dashboard
+    # 7. Export JSON & JS pour le Dashboard
     export_data = {
         'metadata': {
             'generated_at': datetime.now().isoformat(),
@@ -264,10 +268,62 @@ def run_import_pipeline(data_directory="data", output_path="dashboard/data.json"
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(export_data, f, ensure_ascii=False, indent=2)
 
+    js_output_path = os.path.join(os.path.dirname(output_path), "data.js")
+    with open(js_output_path, 'w', encoding='utf-8') as f:
+        f.write("window.__DASHBOARD_DATA__ = " + json.dumps(export_data, ensure_ascii=False) + ";\n")
+
     print("\n" + "─" * 70)
-    print(f"✅  Données compilées avec succès dans : '{output_path}'")
-    print(f"📈  Taille du fichier : {os.path.getsize(output_path) / 1024:.1f} Ko")
-    print("✨  Le dashboard est prêt pour consultation ou déploiement !")
+    print(f"✅  Données JSON compilées : '{output_path}' ({os.path.getsize(output_path) / 1024:.1f} Ko)")
+    print(f"✅  Données JS compilées   : '{js_output_path}' ({os.path.getsize(js_output_path) / 1024:.1f} Ko)")
+    print(f"✨  Dashboard HTML synchronisé et prêt !")
+
+    # 8. Automatisation complète : Détection et ouverture automatique du Dashboard
+    print("─" * 70)
+    print("🌐  OUVERTURE AUTOMATIQUE DU DASHBOARD...")
+    
+    import socket
+    import webbrowser
+    import threading
+    import http.server
+    import socketserver
+
+    def is_port_active(port=8080):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(0.3)
+            return s.connect_ex(('127.0.0.1', port)) == 0
+
+    port = 8080
+    dashboard_url = f"http://localhost:{port}/dashboard/"
+    file_path = os.path.abspath("dashboard/index.html")
+    file_url = f"file://{file_path}"
+
+    server_active = is_port_active(port)
+    if not server_active:
+        class QuietHandler(http.server.SimpleHTTPRequestHandler):
+            def log_message(self, format, *args):
+                pass
+        try:
+            httpd = socketserver.TCPServer(("", port), QuietHandler)
+            threading.Thread(target=httpd.serve_forever, daemon=True).start()
+            server_active = True
+            print(f"⚡  Serveur local démarré automatiquement sur http://localhost:{port}")
+        except Exception:
+            dashboard_url = file_url
+
+    if "--no-browser" not in sys.argv:
+        try:
+            webbrowser.open(dashboard_url)
+            print(f"🚀  Le dashboard s'est ouvert automatiquement dans votre navigateur !")
+        except Exception as e:
+            print(f"⚠️  Impossible d'ouvrir automatiquement le navigateur : {e}")
+
+    print("\n" + "=" * 70)
+    print("✨  RÉSULTAT FINAL DISPONIBLE :")
+    print(f"  📊  Analyse des données : Terminée avec succès ({total_products:,} offres analysées)".replace(',', ' '))
+    print(f"  📁  Fichier JSON produit : {output_path}")
+    print(f"  📁  Fichier JS produit   : {js_output_path}")
+    print(f"  🌍  Accès Dashboard Web  : {dashboard_url}")
+    print(f"  💻  Accès direct fichier : {file_url}")
     print("=" * 70 + "\n")
 
 if __name__ == "__main__":
