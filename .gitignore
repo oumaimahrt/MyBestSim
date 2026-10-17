@@ -6,6 +6,7 @@ __pycache__/
 # Documents confidentiels du recruteur & notes personnelles
 offre de stage/
 notes.md
+README_draft.md
 
 # Exports redondants à la racine (le vrai est dans dashboard/data.json)
 dashboard_data.json
