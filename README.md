@@ -24,6 +24,8 @@ Ce dépôt contient l'ensemble des livrables réalisés par **Oumaima Hrete** da
 MyBestSim importe quotidiennement des offres eSIM via des fichiers CSV (un par fournisseur).  
 L'objectif : concevoir une automatisation capable d'ingérer ces flux, d'extraire les métriques clés, et de générer un dashboard visuel accessible en ligne.
 
+> **Note sur les données (`data/`) :** Ce dossier contient exclusivement des grilles tarifaires publiques issues des catalogues des 18 fournisseurs eSIM. Il ne comporte aucune donnée personnelle (zéro PII) ou confidentielle, garantissant une conformité totale tout en assurant la reproductibilité immédiate du pipeline en local.
+
 ### 🔍 Les 6 Statistiques Clés Requises (Catalogue de 5 056 Offres)
 
 | # | Métrique Obligatoire | Valeur Réelle | Précision Analytique & Data Engineering |
