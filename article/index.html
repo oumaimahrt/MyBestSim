@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internet en Croisière : Quelle eSIM Choisir en 2026 ? (Guide & Comparatif) – MyBestSim</title>
+  <meta name="description" content="Votre eSIM fonctionne-t-elle en mer ? Comment avoir internet en escale sans payer 30 €/jour de Wi-Fi ou risquer 900 € de hors-forfait ? Comparatif des meilleures offres 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --secondary: #0ea5e9;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --danger-bg: #fef2f2;
+      --danger-border: #fecaca;
+      --danger-text: #b91c1c;
+      --success-bg: #f0fdf4;
+      --success-border: #bbf7d0;
+      --success-text: #15803d;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --warning-text: #b45309;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 0;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    .brand span { color: var(--primary); }
+
+    .article-container {
+      max-width: 860px;
+      margin: 2.5rem auto 5rem;
+      padding: 0 1.5rem;
+    }
+
+    .article-header {
+      margin-bottom: 2rem;
+    }
+    .tag {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #0f172a;
+      margin-bottom: 1rem;
+    }
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f1f5f9;
+    }
+    h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 1.8rem 0 0.8rem;
+    }
+
+    p { margin-bottom: 1.25rem; font-size: 1.05rem; }
+    strong { color: #0f172a; }
+
+    /* CALLOUT BOXES */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      border-left: 4px solid;
+      font-size: 0.98rem;
+    }
+    .callout-danger {
+      background: var(--danger-bg);
+      border-color: #ef4444;
+      color: #991b1b;
+    }
+    .callout-success {
+      background: var(--success-bg);
+      border-color: #22c55e;
+      color: #166534;
+    }
+    .callout-warning {
+      background: var(--warning-bg);
+      border-color: #f59e0b;
+      color: #92400e;
+    }
+
+    /* COMPARISON SCHEME */
+    .network-diagram {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin: 2rem 0;
+    }
+    @media (max-width: 640px) {
+      .network-diagram { grid-template-columns: 1fr; }
+    }
+    .diagram-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+    }
+    .diagram-box.sea { border-top: 4px solid #ef4444; }
+    .diagram-box.port { border-top: 4px solid #22c55e; }
+    .diagram-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .diagram-list {
+      list-style: none;
+      font-size: 0.92rem;
+    }
+    .diagram-list li {
+      padding: 0.35rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    /* TABLE */
+    .table-container {
+      overflow-x: auto;
+      margin: 2rem 0;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+    th {
+      background: #f8fafc;
+      padding: 14px 16px;
+      font-weight: 700;
+      color: #334155;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafafa; }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .badge-promo { background: #dbeafe; color: #1e40af; }
+    .badge-sea { background: #fef3c7; color: #92400e; }
+    .badge-land { background: #dcfce7; color: #166534; }
+
+    /* CHECKLIST */
+    .checklist-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem 1.8rem;
+      margin: 2rem 0;
+    }
+    .checklist-step {
+      margin-bottom: 1.25rem;
+    }
+    .checklist-step:last-child { margin-bottom: 0; }
+    .step-badge {
+      display: inline-block;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 0.35rem;
+    }
+
+    /* CTA BOX */
+    .cta-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #ffffff;
+      padding: 2.5rem;
+      border-radius: 16px;
+      text-align: center;
+      margin: 3.5rem 0;
+      box-shadow: 0 20px 25px -5px rgba(37,99,235,0.2);
+    }
+    .cta-card h3 { color: #ffffff; font-size: 1.6rem; margin-bottom: 0.75rem; }
+    .cta-card p { color: #dbeafe; margin-bottom: 1.5rem; font-size: 1.05rem; }
+    .cta-btn {
+      display: inline-block;
+      background: #ffffff;
+      color: #1e3a8a;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+
+    /* FAQ */
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      padding: 1.25rem 1.5rem;
+    }
+    .faq-q {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .faq-a { color: #475569; font-size: 0.96rem; line-height: 1.6; }
+
+    footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+
+  <!-- Schema.org FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Mon eSIM fonctionne-t-elle quand le paquebot est en pleine mer ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Non, à l'exception de forfaits spécifiques comme GigSky Cruise. Les eSIM conventionnelles (Airalo, Saily, Holafly) fonctionnent exclusivement sur les réseaux terrestres. En haute mer, il n'y a pas d'antennes relais classiques. Pour capter au large, il faut soit le Wi-Fi satellite du navire, soit une eSIM disposant d'accords maritimes satellites."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Pourquoi le Wi-Fi des navires de croisière est-il si cher ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le Wi-Fi à bord repose sur une liaison satellite complexe (liaisons géostationnaires ou constellations Starlink Maritime). L'équipement des paquebots et la bande passante coûtent des dizaines de milliers d'euros par mois aux compagnies, qui répercutent ce coût sous forme de forfaits journaliers de 20 à 35 €."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Que risque-t-on si on oublie le Mode Avion en mer ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Votre smartphone se connecte automatiquement au réseau cellulaire satellite du navire. Les transferts de données en arrière-plan sont alors facturés au tarif maritime satellite (10 à 30 € par Mo), provoquant fréquemment des factures de roaming de 500 à 1 500 € en quelques minutes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Vaut-il mieux acheter une eSIM par pays ou une eSIM régionale pour une croisière ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "L'eSIM régionale est très largement recommandée. Une seule eSIM installée avant le départ couvre automatiquement tous les pays traversés durant la croisière (ex: France, Espagne, Italie, Grèce pour l'Europe), sans manipulation supplémentaire."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Peut-on partager sa connexion (Hotspot) avec une eSIM en escale ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, chez la majorité des fournisseurs comme Airalo, Saily, Ubigi ou Nomad. Vous pouvez partager votre quota de données avec vos proches lors des visites aux escales."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <a href="https://mybestsim.com/fr/" class="brand">
+      📡 MyBestSim <span>· Comparateur eSIM</span>
+    </a>
+    <a href="https://mybestsim.com/fr/" style="color:var(--primary);font-weight:600;font-size:0.9rem;text-decoration:none;">Comparer 5 000+ offres →</a>
+  </div>
+</header>
+
+<main class="article-container">
+  <article>
+    <div class="article-header">
+      <span class="tag">Guide Pratique & Comparatif 2026</span>
+      <h1>Internet en croisière : quelle eSIM choisir ?</h1>
+      <div class="meta">
+        <span>✍️ Rédigé par l'équipe MyBestSim</span>
+        <span>⏱️ 9 min de lecture</span>
+        <span>🔄 Mis à jour en 2026</span>
+      </div>
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?auto=format&fit=crop&w=1200&q=80" alt="Voyageur profitant de la vue depuis le pont d'un paquebot de croisière avec son smartphone" class="hero-img">
+
+    <p>Partir en croisière est une expérience inoubliable. Mais pour rester connecté avec ses proches, partager ses photos de vacances ou s'orienter lors des escales, c'est bien souvent le parcours du combattant.</p>
+
+    <p>Entre le <strong>Wi-Fi à bord facturé entre 20 et 35 € par jour et par appareil</strong>, et le risque bien réel d'une <strong>facture de roaming maritime à plus de 900 €</strong> au retour, trouver la bonne solution peut vite devenir un casse-tête.</p>
+
+    <p>L'<strong>eSIM de voyage</strong> s'est imposée ces dernières années comme l'alternative incontournable des voyageurs avertis. Mais une question centrale se pose : <strong>une eSIM fonctionne-t-elle réellement en pleine mer ? Quelles sont les meilleures offres pour vos escales en Méditerranée, aux Caraïbes ou dans les Fjords ?</strong></p>
+
+    <p>Chez <strong>MyBestSim</strong>, nous avons analysé plus de 5 000 offres chez les 18 plus grands opérateurs mondiaux. Voici notre guide complet, sans langue de bois et orienté 100 % budget.</p>
+
+    <h2>1. Pleine Mer vs Escales : La règle d'or à connaître impérativement</h2>
+
+    <p>Avant d'acheter n'importe quel forfait, il y a un principe technique fondamental à comprendre : <strong>aucune eSIM terrestre classique ne capte au milieu de l'océan.</strong></p>
+
+    <div class="network-diagram">
+      <div class="diagram-box sea">
+        <div class="diagram-title" style="color:#b91c1c;">🌊 EN PLEINE MER (> 12 milles des côtes)</div>
+        <ul class="diagram-list">
+          <li>❌ Aucune antenne relais 4G/5G terrestre à portée</li>
+          <li>🛰️ Réseau satellite maritime privé activé par le navire (WMS, Cellular at Sea)</li>
+          <li>⚠️ <strong>Tarifs exorbitants :</strong> 10 € à 30 € le Mo facturé par votre opérateur</li>
+          <li>🛡️ <strong>Solution :</strong> Mode Avion obligatoire ou eSIM spécifique satellite</li>
+        </ul>
+      </div>
+
+      <div class="diagram-box port">
+        <div class="diagram-title" style="color:#15803d;">⚓ AU PORT & ESCALES (< 12 milles des côtes)</div>
+        <ul class="diagram-list">
+          <li>📶 Antennes 4G et 5G locales du pays d'accueil</li>
+          <li>🚀 Débit ultra-rapide et réseau identique aux résidents</li>
+          <li>💡 <strong>95 % des besoins réels</strong> s'effectuent à terre (Google Maps, WhatsApp, photos)</li>
+          <li>🏆 <strong>Terrain de jeu idéal de l'eSIM régionale :</strong> dès 2 € / Go</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-danger">
+      <strong>⚠️ Le piège maritime à 1 000 € :</strong> Dès que le navire quitte les eaux territoriales, le réseau satellite du bord prend le relais. Si votre forfait mobile français garde l'itinérance active, une simple synchronisation d'application en arrière-plan peut générer 500 € à 1 500 € de hors-forfait en quelques minutes. <strong>Le Mode Avion est non négociable dès que le navire prend le large.</strong>
+    </div>
+
+    <h2>2. Les 3 stratégies possibles pour avoir Internet en croisière</h2>
+
+    <h3>Stratégie n°1 : Le combo malin « eSIM Régionale d'escale + Mode Avion en mer » 🏆</h3>
+    <p><strong>Pour qui ?</strong> 85 % des croisiéristes qui veulent explorer les villes d'escale tout en profitant des animations et de la déconnexion à bord pendant les heures de navigation.</p>
+    <p><strong>Comment ça marche ?</strong> Vous installez une <strong>eSIM régionale</strong> (ex: Europe pour la Méditerranée, Caraïbes pour les îles antillaises). En mer, vous laissez votre smartphone en <strong>Mode Avion</strong>. Dès l'arrivée au port, vous activez la connexion et disposez d'Internet haut débit à prix mini.</p>
+    <p><strong>Budget estimé :</strong> <strong>12 € à 25 € pour toute la semaine</strong>, contre 180 € pour le Wi-Fi du paquebot.</p>
+
+    <h3>Stratégie n°2 : L'eSIM hybride Mer + Terre (GigSky Cruise) 🛰️</h3>
+    <p><strong>Pour qui ?</strong> Les voyageurs qui doivent rester joignables en cas d'urgence en pleine mer sans payer le forfait Wi-Fi complet du bord.</p>
+    <p><strong>Comment ça marche ?</strong> <strong>GigSky</strong> est le seul opérateur du marché à intégrer des accords officiels avec les réseaux cellulaires satellites de plus de 200 paquebots (Royal Caribbean, MSC, Costa, Carnival...). Le forfait <em>Cruise + Land</em> couvre à la fois la mer et les ports.</p>
+    <p><strong>Budget estimé :</strong> <strong>35 € à 80 € selon le volume de data</strong>.</p>
+
+    <h3>Stratégie n°3 : Le forfait Wi-Fi officiel du croisiériste 🚢</h3>
+    <p><strong>Pour qui ?</strong> Les télétravailleurs nomades ou les familles nombreuses connectées en continu 24h/24.</p>
+    <p><strong>Budget estimé :</strong> <strong>140 € à 250 € la semaine</strong>. Attention : même avec Starlink, le réseau peut ralentir en soirée quand plusieurs milliers de passagers se connectent simultanément.</p>
+
+    <h2>3. Comparatif des meilleures eSIM de croisière en 2026</h2>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Fournisseur</th>
+            <th>Type de couverture</th>
+            <th>Atout majeur</th>
+            <th>Idéal pour...</th>
+            <th>Prix indicatif</th>
+            <th>Code Promo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>GigSky</strong></td>
+            <td><span class="badge badge-sea">🌊 Mer + Terre</span></td>
+            <td>Seule eSIM compatible satellite sur 200+ navires</td>
+            <td>Ceux qui veulent du réseau au large</td>
+            <td>Dès 35 €</td>
+            <td><span class="badge badge-promo">MYBESTSIM</span> (-10%)</td>
+          </tr>
+          <tr>
+            <td><strong>Airalo</strong></td>
+            <td><span class="badge badge-land">🌍 Terrestre Régional</span></td>
+            <td>Fiabilité éprouvée (39 pays Europe / Caraïbes)</td>
+            <td>Les escales multiples sans prise de tête</td>
+            <td>Dès 12 € (5 Go)</td>
+            <td><span class="badge badge-promo">MYBESTSIM10</span> (-10%)</td>
+          </tr>
+          <tr>
+            <td><strong>Saily</strong></td>
+            <td><span class="badge badge-land">🌍 Terrestre Régional</span></td>
+            <td>Développé par NordVPN, sécurité au top</td>
+            <td>La simplicité d'installation en famille</td>
+            <td>Dès 11 € (3 Go)</td>
+            <td><span class="badge badge-promo">MYBESTSIM</span> (-5%)</td>
+          </tr>
+          <tr>
+            <td><strong>Holafly</strong></td>
+            <td><span class="badge badge-land">♾️ Données Illimitées</span></td>
+            <td>Data illimitée à chaque escale</td>
+            <td>Gros consommateurs de vidéos & stories</td>
+            <td>Dès 27 € (5j)</td>
+            <td><span class="badge badge-promo">MYBESTSIM5</span> (-5%)</td>
+          </tr>
+          <tr>
+            <td><strong>JamboSIM / Yesim</strong></td>
+            <td><span class="badge badge-land">💰 Meilleur €/Go</span></td>
+            <td>Tarif le plus bas du marché (dès 2,90 €/Go)</td>
+            <td>Les voyageurs qui surveillent leur budget</td>
+            <td>Dès 9 € (3 Go)</td>
+            <td><span class="badge badge-promo">MYBESTSIM</span> (-10%)</td>
+          </tr>
+          <tr>
+            <td><strong>Ubigi</strong></td>
+            <td><span class="badge badge-land">⚡ 5G Premium</span></td>
+            <td>Partenariats directs et recharges hors-ligne</td>
+            <td>Vitesse maximale garantie dans les ports</td>
+            <td>Dès 14 € (5 Go)</td>
+            <td><span class="badge badge-promo">MYBESTSIM</span> (-10%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>4. Quelle eSIM choisir selon votre itinéraire de croisière ?</h2>
+
+    <h3>🚢 Croisière Méditerranée (Espagne, Italie, Grèce, France, Malte)</h3>
+    <p>Vous visitez une ville et souvent un pays différent chaque matin. Prendre une eSIM par pays est inutile et fastidieux. <strong>Une eSIM Régionale Europe (39 à 42 pays)</strong> s'active une seule fois et bascule automatiquement sur les opérateurs nationaux (Orange, Vodafone, TIM, Movistar).</p>
+    <p><em>Notre recommandation :</em> <strong>Airalo Eurolink</strong> ou <strong>Saily Europe</strong> (10 Go pour environ 20 €).</p>
+
+    <h3>🌴 Croisière Caraïbes & Bahamas (Miami, Bahamas, Mexique, Jamaïque)</h3>
+    <p>Aux Caraïbes, le roaming européen n'existe pas et chaque île pratique des tarifs hors-forfait astronomiques. Choisissez impérativement une offre couvrant l'ensemble du bassin.</p>
+    <p><em>Notre recommandation :</em> <strong>Airalo Island Hopper</strong> (couvre 28 îles caribéennes) ou <strong>GigSky Caraïbes Cruise</strong>.</p>
+
+    <h3>🏔️ Croisière Fjords Norvégiens & Europe du Nord</h3>
+    <p>Dans les fjords, les falaises sont proches des navires. Les antennes terrestres 4G/5G norvégiennes portent très loin sur l'eau, permettant souvent de capter même depuis le balcon de votre cabine ! Une eSIM Europe ou Norvège (Nomad ou Yesim) suffit amplement.</p>
+
+    <h2>5. Le protocole anti-facture : Comment régler son smartphone</h2>
+
+    <div class="checklist-box">
+      <div class="checklist-step">
+        <span class="step-badge">1. AVANT D'EMBARQUER (À QUAI)</span>
+        <p>Installez l'eSIM via le QR code fourni par email. Renommez-la « eSIM Croisière » dans vos paramètres.</p>
+      </div>
+      <div class="checklist-step">
+        <span class="step-badge">2. DÈS LE DÉPART DU BATEAU</span>
+        <p><strong>Activez le MODE AVION sans attendre.</strong> Si vous souhaitez utiliser le Wi-Fi du bord, activez le Wi-Fi tout en conservant le Mode Avion actif.</p>
+      </div>
+      <div class="checklist-step">
+        <span class="step-badge">3. EN ESCALE AU PORT</span>
+        <p>Désactivez le Mode Avion. Dans les réglages, sélectionnez l'eSIM pour les <em>Données cellulaires</em> et activez l'itinérance <strong>uniquement sur la ligne eSIM</strong> (jamais sur votre SIM principale !).</p>
+      </div>
+    </div>
+
+    <!-- CTA INTERACTIF -->
+    <div class="cta-card">
+      <h3>Trouvez la meilleure offre pour votre croisière</h3>
+      <p>Comparez en temps réel plus de 5 000 forfaits eSIM de 18 opérateurs mondiaux et partez l'esprit tranquille.</p>
+      <a href="https://mybestsim.com/fr/" class="cta-btn">Comparer sur MyBestSim →</a>
+    </div>
+
+    <h2>6. Foire Aux Questions (FAQ)</h2>
+
+    <div class="faq-item">
+      <div class="faq-q"><span>❓</span> Mon eSIM fonctionne-t-elle quand le navire est en pleine mer ?</div>
+      <div class="faq-a">Non, sauf avec des forfaits maritimes spécifiques comme GigSky Cruise. Les forfaits eSIM conventionnels (Airalo, Saily, Holafly) fonctionnent uniquement à portée des antennes terrestres (environ 12 milles des côtes).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q"><span>❓</span> Pourquoi le Wi-Fi du paquebot est-il si cher ?</div>
+      <div class="faq-a">Le navire utilise une infrastructure satellite maritime très onéreuse (liaisons Starlink ou géostationnaires). Les compagnies répercutent ce coût sous la forme d'abonnements quotidiens de 20 € à 35 € par jour.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q"><span>❓</span> Que faire si j'oublie d'activer le Mode Avion en mer ?</div>
+      <div class="faq-a">Votre smartphone risque de se connecter au réseau satellite de bord (*Cellular at Sea* ou *WMS*). Dès que vous vous en apercevez, activez le Mode Avion immédiatement et contactez votre opérateur mobile pour vérifier votre consommation en cours.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q"><span>❓</span> Peut-on faire un partage de connexion (Hotspot) avec une eSIM en escale ?</div>
+      <div class="faq-a">Oui, avec la grande majorité des opérateurs (Airalo, Saily, Ubigi, Nomad, Yesim). Vous pouvez partager votre connexion 4G/5G avec votre famille ou votre tablette lors des visites à terre.</div>
+    </div>
+
+    <p style="margin-top:2.5rem;font-size:0.95rem;color:var(--text-muted);text-align:center;">
+      <em>Article publié sur MyBestSim · Test technique de recrutement Développeur IA & Automatisation · Octobre 2026</em>
+    </p>
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MyBestSim. Tous droits réservés. Comparateur indépendant d'offres eSIM de voyage.</p>
+</footer>
+
+</body>
+</html>
