@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>eSIM Market Dashboard – MyBestSim Test</title>
-  <meta name="description" content="Tableau de bord analytique des offres eSIM : comparaison de 4 403 plans chez 18 fournisseurs sur 54 destinations." />
+  <title>eSIM Market Analytics Dashboard – MyBestSim</title>
+  <meta name="description" content="Tableau de bord analytique des offres eSIM : comparaison de 5 056 plans chez 18 fournisseurs sur 54 destinations. Réalisé par Oumaima Hrete – Test de recrutement MyBestSim." />
+  <link rel="icon" href="logo_mybestsim.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
@@ -14,39 +15,59 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0b0f1a;
-      --bg2:       #111827;
-      --bg3:       #1a2235;
-      --border:    #1e2d45;
-      --text:      #e2e8f0;
-      --muted:     #64748b;
-      --accent:    #3b82f6;
-      --accent2:   #06b6d4;
+      /* ── MyBestSim Official Design Tokens ── */
+      --mbs-primary:       #0ea5e9;
+      --mbs-primary-dark:  #0284c7;
+      --mbs-accent:        #10b981;
+      --mbs-accent-dark:   #059669;
+      --mbs-yellow:        #ffcc00;
+      --mbs-red:           #de1414;
+      --mbs-ink:           #0f172a;
+      --mbs-muted:         #475569;
+      --mbs-muted-soft:    #64748b;
+      --mbs-bg:            #ffffff;
+      --mbs-surface:       #f8fbff;
+      --mbs-surface-2:     #eef4ff;
+      --mbs-border:        #dbeafe;
+      --mbs-border-soft:   #e2e8f0;
+      --mbs-shadow:        0 4px 24px rgba(15,23,42,0.08);
+      --mbs-shadow-lg:     0 14px 40px rgba(15,23,42,0.12);
+      --mbs-radius:        16px;
+      --mbs-radius-sm:     10px;
+      /* ── Aliases for backward compat ── */
+      --bg:        #ffffff;
+      --bg2:       #f8fbff;
+      --bg3:       #eef4ff;
+      --border:    #dbeafe;
+      --text:      #0f172a;
+      --muted:     #475569;
+      --accent:    #0ea5e9;
+      --accent2:   #10b981;
       --green:     #10b981;
-      --yellow:    #f59e0b;
-      --red:       #ef4444;
+      --yellow:    #ffcc00;
+      --red:       #de1414;
       --purple:    #8b5cf6;
-      --card-glow: 0 0 40px rgba(59,130,246,0.06);
+      --card-glow: 0 4px 24px rgba(14,165,233,0.08);
     }
 
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, #ffffff 0%, #f0f5ff 55%, #ffffff 100%);
+      color: var(--mbs-ink);
       min-height: 100vh;
       line-height: 1.6;
     }
 
-    /* ── HEADER ────────────────────────────────────────── */
+    /* ── HEADER — MyBestSim Official Style ──────────────── */
     header {
-      background: linear-gradient(135deg, #0d1b2e 0%, #0b1628 50%, #0f1f35 100%);
-      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+      border-bottom: 2px solid var(--mbs-yellow);
       padding: 0 2rem;
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 16px rgba(15,23,42,0.07);
     }
     .header-inner {
       max-width: 1400px;
@@ -54,36 +75,68 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
+      height: 70px;
+      gap: 1rem;
     }
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 700;
+      gap: 12px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .logo img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+    }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .logo-text .logo-brand {
       font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--mbs-ink);
       letter-spacing: -0.02em;
     }
-    .logo-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
+    .logo-text .logo-sub {
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: var(--mbs-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
-    .logo span { color: var(--accent2); }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .header-nav a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--mbs-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .header-nav a:hover { color: var(--mbs-primary); }
+    .header-nav a.active { color: var(--mbs-primary); font-weight: 600; }
     .header-meta {
-      font-size: 0.8rem;
-      color: var(--muted);
+      font-size: 0.78rem;
+      color: var(--mbs-muted-soft);
+      white-space: nowrap;
     }
     .header-badge {
-      background: rgba(59,130,246,0.12);
-      border: 1px solid rgba(59,130,246,0.3);
-      color: var(--accent);
-      padding: 4px 12px;
+      background: var(--mbs-primary);
+      color: #ffffff;
+      padding: 6px 16px;
       border-radius: 20px;
       font-size: 0.75rem;
       font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(14,165,233,0.3);
     }
 
     /* ── MAIN LAYOUT ───────────────────────────────────── */
@@ -91,22 +144,25 @@
 
     /* ── SECTION TITLE ─────────────────────────────────── */
     .section-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--mbs-ink);
+      margin-bottom: 1.2rem;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      padding-left: 12px;
+      border-left: 4px solid var(--mbs-primary);
     }
     .section-title::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: var(--border);
+      background: var(--mbs-border);
+      margin-left: 4px;
     }
 
-    /* ── KPI CARDS ─────────────────────────────────────── */
+    /* ── KPI CARDS — MyBestSim Style ───────────────────── */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -114,53 +170,54 @@
       margin-bottom: 2rem;
     }
     .kpi-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--mbs-border);
+      border-radius: var(--mbs-radius);
       padding: 1.4rem 1.5rem;
       position: relative;
       overflow: hidden;
-      transition: transform 0.2s, border-color 0.2s;
-      box-shadow: var(--card-glow);
+      transition: transform 0.22s, box-shadow 0.22s;
+      box-shadow: var(--mbs-shadow);
     }
     .kpi-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(59,130,246,0.4);
+      transform: translateY(-3px);
+      box-shadow: var(--mbs-shadow-lg);
+      border-color: rgba(14,165,233,0.35);
     }
     .kpi-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      height: 3px;
+      background: linear-gradient(90deg, var(--mbs-primary), var(--mbs-accent));
     }
     .kpi-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--mbs-muted);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 0.5rem;
     }
     .kpi-value {
-      font-size: 2rem;
+      font-size: 1.9rem;
       font-weight: 800;
       letter-spacing: -0.03em;
-      background: linear-gradient(135deg, #ffffff, var(--accent2));
+      background: linear-gradient(135deg, var(--mbs-primary-dark), var(--mbs-primary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .kpi-sub {
-      font-size: 0.78rem;
-      color: var(--muted);
+      font-size: 0.76rem;
+      color: var(--mbs-muted-soft);
       margin-top: 4px;
     }
     .kpi-icon {
       position: absolute;
       top: 1.4rem; right: 1.5rem;
       font-size: 1.4rem;
-      opacity: 0.3;
+      opacity: 0.18;
     }
 
     /* ── CHARTS GRID ───────────────────────────────────── */
@@ -171,24 +228,26 @@
       margin-bottom: 2rem;
     }
     .chart-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--mbs-border);
+      border-radius: var(--mbs-radius);
       padding: 1.5rem;
-      box-shadow: var(--card-glow);
+      box-shadow: var(--mbs-shadow);
+      transition: box-shadow 0.2s;
     }
+    .chart-card:hover { box-shadow: var(--mbs-shadow-lg); }
     .chart-card.wide {
       grid-column: span 2;
     }
     .chart-title {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--mbs-ink);
+      margin-bottom: 0.4rem;
     }
     .chart-sub {
       font-size: 0.75rem;
-      color: var(--muted);
+      color: var(--mbs-muted-soft);
       margin-bottom: 1rem;
     }
     
@@ -201,11 +260,11 @@
       margin-bottom: 2rem;
     }
     .insight-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--mbs-border);
+      border-radius: var(--mbs-radius);
       padding: 1.4rem;
-      box-shadow: var(--card-glow);
+      box-shadow: var(--mbs-shadow);
     }
     .insight-header {
       display: flex;
@@ -220,20 +279,21 @@
       font-size: 1rem;
       flex-shrink: 0;
     }
-    .insight-icon.green  { background: rgba(16,185,129,0.15); }
-    .insight-icon.yellow { background: rgba(245,158,11,0.15); }
-    .insight-icon.blue   { background: rgba(59,130,246,0.15); }
-    .insight-icon.purple { background: rgba(139,92,246,0.15); }
+    .insight-icon.green  { background: rgba(16,185,129,0.12); }
+    .insight-icon.yellow { background: rgba(255,204,0,0.15); }
+    .insight-icon.blue   { background: rgba(14,165,233,0.12); }
+    .insight-icon.purple { background: rgba(139,92,246,0.12); }
     .insight-title {
       font-size: 0.9rem;
       font-weight: 600;
+      color: var(--mbs-ink);
     }
     .insight-body {
       font-size: 0.82rem;
-      color: var(--muted);
+      color: var(--mbs-muted);
       line-height: 1.7;
     }
-    .insight-body strong { color: var(--text); }
+    .insight-body strong { color: var(--mbs-ink); }
     .insight-pill {
       display: inline-block;
       padding: 2px 8px;
@@ -242,22 +302,23 @@
       font-weight: 600;
       margin: 2px;
     }
-    .pill-green  { background: rgba(16,185,129,0.15); color: var(--green); }
-    .pill-yellow { background: rgba(245,158,11,0.15);  color: var(--yellow); }
-    .pill-blue   { background: rgba(59,130,246,0.15);  color: var(--accent); }
-    .pill-red    { background: rgba(239,68,68,0.12);   color: var(--red); }
+    .pill-green  { background: rgba(16,185,129,0.12); color: var(--mbs-accent); }
+    .pill-yellow { background: rgba(255,204,0,0.15);  color: #a16207; }
+    .pill-blue   { background: rgba(14,165,233,0.12);  color: var(--mbs-primary-dark); }
+    .pill-red    { background: rgba(222,20,20,0.08);   color: var(--mbs-red); }
 
     /* ── FILTER BAR ────────────────────────────────────── */
     .filter-bar {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--mbs-border);
+      border-radius: var(--mbs-radius);
       padding: 1.2rem 1.5rem;
       margin-bottom: 1.2rem;
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       align-items: flex-end;
+      box-shadow: var(--mbs-shadow);
     }
     .filter-group {
       display: flex;
@@ -265,56 +326,56 @@
       gap: 5px;
     }
     .filter-group label {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      color: var(--muted);
+      color: var(--mbs-muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
     }
     select, input[type=range], input[type=number] {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 8px;
-      padding: 6px 10px;
+      background: var(--mbs-surface);
+      border: 1.5px solid var(--mbs-border);
+      color: var(--mbs-ink);
+      border-radius: var(--mbs-radius-sm);
+      padding: 7px 10px;
       font-size: 0.82rem;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
       cursor: pointer;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    select:hover, input:hover { border-color: var(--accent); }
-    select:focus, input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
+    select:hover, input:hover { border-color: var(--mbs-primary); }
+    select:focus, input:focus { border-color: var(--mbs-primary); box-shadow: 0 0 0 3px rgba(14,165,233,0.15); }
 
     .filter-info {
       font-size: 0.8rem;
-      color: var(--muted);
+      color: var(--mbs-muted);
       margin-left: auto;
       align-self: center;
     }
-    .filter-info strong { color: var(--accent); }
+    .filter-info strong { color: var(--mbs-primary-dark); font-weight: 700; }
 
     .btn-reset {
-      background: rgba(59,130,246,0.12);
-      border: 1px solid rgba(59,130,246,0.3);
-      color: var(--accent);
-      padding: 6px 14px;
-      border-radius: 8px;
+      background: var(--mbs-surface-2);
+      border: 1.5px solid var(--mbs-border);
+      color: var(--mbs-primary);
+      padding: 7px 14px;
+      border-radius: var(--mbs-radius-sm);
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
-    .btn-reset:hover { background: rgba(59,130,246,0.2); }
+    .btn-reset:hover { background: var(--mbs-primary); color: #fff; border-color: var(--mbs-primary); }
 
     /* ── TABLE ─────────────────────────────────────────── */
     .table-wrapper {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--mbs-border);
+      border-radius: var(--mbs-radius);
       overflow: hidden;
-      box-shadow: var(--card-glow);
+      box-shadow: var(--mbs-shadow);
       margin-bottom: 2rem;
     }
     .table-scroll { overflow-x: auto; }
@@ -324,35 +385,35 @@
       font-size: 0.82rem;
     }
     thead {
-      background: var(--bg3);
+      background: var(--mbs-surface-2);
     }
     th {
       padding: 12px 14px;
       text-align: left;
-      font-weight: 600;
-      color: var(--muted);
-      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--mbs-muted);
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.08em;
       cursor: pointer;
       white-space: nowrap;
       user-select: none;
       transition: color 0.15s;
     }
-    th:hover { color: var(--text); }
-    th.sorted { color: var(--accent); }
+    th:hover { color: var(--mbs-ink); }
+    th.sorted { color: var(--mbs-primary); }
     th .sort-arrow { margin-left: 4px; opacity: 0.5; }
     td {
       padding: 10px 14px;
-      border-top: 1px solid rgba(255,255,255,0.04);
-      color: var(--text);
+      border-top: 1px solid var(--mbs-border-soft);
+      color: var(--mbs-ink);
     }
-    tr:hover td { background: rgba(255,255,255,0.02); }
+    tr:hover td { background: var(--mbs-surface); }
     .provider-tag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-weight: 500;
+      font-weight: 600;
     }
     .provider-dot {
       width: 8px; height: 8px;
@@ -366,38 +427,39 @@
       font-size: 0.7rem;
       font-weight: 600;
     }
-    .badge-5g   { background: rgba(139,92,246,0.18); color: var(--purple); }
-    .badge-4g   { background: rgba(59,130,246,0.15); color: var(--accent); }
-    .badge-best { background: rgba(16,185,129,0.18); color: var(--green); }
-    .badge-topup { background: rgba(245,158,11,0.15); color: var(--yellow); }
-    .badge-unlimited { background: rgba(236, 72, 153, 0.18); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.35); }
-    .badge-subtle { background: rgba(255, 255, 255, 0.05); color: var(--muted); font-size: 0.72rem; }
+    .badge-5g   { background: rgba(139,92,246,0.12); color: #7c3aed; }
+    .badge-4g   { background: rgba(14,165,233,0.12); color: var(--mbs-primary-dark); }
+    .badge-best { background: rgba(16,185,129,0.12); color: var(--mbs-accent-dark); }
+    .badge-topup { background: rgba(255,204,0,0.18); color: #92400e; }
+    .badge-unlimited { background: rgba(236,72,153,0.1); color: #be185d; border: 1px solid rgba(236,72,153,0.2); }
+    .badge-subtle { background: var(--mbs-surface-2); color: var(--mbs-muted-soft); font-size: 0.72rem; }
     .search-input {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 6px 12px;
-      border-radius: 8px;
+      background: var(--mbs-surface);
+      border: 1.5px solid var(--mbs-border);
+      color: var(--mbs-ink);
+      padding: 7px 12px;
+      border-radius: var(--mbs-radius-sm);
       font-size: 0.8rem;
       font-family: inherit;
       outline: none;
-      min-width: 180px;
-      transition: border-color 0.2s;
+      min-width: 200px;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .search-input:focus { border-color: var(--accent); }
+    .search-input:focus { border-color: var(--mbs-primary); box-shadow: 0 0 0 3px rgba(14,165,233,0.15); }
     .btn-export {
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: var(--green);
-      padding: 6px 14px;
-      border-radius: 8px;
+      background: var(--mbs-accent);
+      border: none;
+      color: #ffffff;
+      padding: 7px 16px;
+      border-radius: var(--mbs-radius-sm);
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 2px 8px rgba(16,185,129,0.25);
     }
-    .btn-export:hover { background: rgba(16, 185, 129, 0.22); }
+    .btn-export:hover { background: var(--mbs-accent-dark); transform: translateY(-1px); }
 
 
     .ppg-bar {
@@ -414,30 +476,34 @@
 
     .table-footer {
       padding: 12px 16px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--mbs-border);
       font-size: 0.78rem;
-      color: var(--muted);
+      color: var(--mbs-muted-soft);
       text-align: center;
     }
 
     /* ── FOOTER ────────────────────────────────────────── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 1.5rem 2rem;
+      background: var(--mbs-ink);
+      border-top: 3px solid var(--mbs-yellow);
+      padding: 2rem 2rem;
       text-align: center;
-      font-size: 0.78rem;
-      color: var(--muted);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
     }
-    footer a { color: var(--accent); text-decoration: none; }
+    footer strong { color: #fff; }
+    footer a { color: var(--mbs-primary); text-decoration: none; }
+    .footer-logo { height: 36px; width: auto; margin-bottom: 0.8rem; filter: brightness(0) invert(1); opacity: 0.85; }
 
     /* ── SCROLLBAR ─────────────────────────────────────── */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: var(--mbs-surface); }
+    ::-webkit-scrollbar-thumb { background: #c7d9f0; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--mbs-primary); }
 
     /* ── RESPONSIVE ────────────────────────────────────── */
     @media (max-width: 768px) {
-      
+      .header-nav { display: none; }
       .chart-card.wide { grid-column: span 1; }
       .charts-grid { grid-template-columns: 1fr; }
     }
@@ -476,14 +542,14 @@
       flex-wrap: wrap;
       gap: 1rem;
       padding: 1.1rem 1.8rem;
-      background: #0f1626;
-      border-top: 1px solid var(--border);
+      background: var(--mbs-surface);
+      border-top: 1px solid var(--mbs-border);
       font-size: 0.85rem;
-      color: var(--muted);
+      color: var(--mbs-muted);
     }
     .pagination-info {
-      font-weight: 500;
-      color: var(--text);
+      font-weight: 600;
+      color: var(--mbs-ink);
     }
     .pagination-controls {
       display: flex;
@@ -491,11 +557,11 @@
       gap: 6px;
     }
     .btn-page {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      color: var(--text);
+      background: #ffffff;
+      border: 1.5px solid var(--mbs-border);
+      color: var(--mbs-ink);
       padding: 7px 14px;
-      border-radius: 8px;
+      border-radius: var(--mbs-radius-sm);
       font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
@@ -504,32 +570,33 @@
       align-items: center;
       gap: 4px;
       user-select: none;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
     .btn-page:hover:not(:disabled) {
-      background: rgba(59, 130, 246, 0.15);
-      border-color: var(--accent);
-      color: var(--accent);
+      background: var(--mbs-surface-2);
+      border-color: var(--mbs-primary);
+      color: var(--mbs-primary);
     }
     .btn-page:disabled {
       opacity: 0.35;
       cursor: not-allowed;
     }
     .btn-page.active {
-      background: var(--accent);
-      border-color: var(--accent);
+      background: var(--mbs-primary);
+      border-color: var(--mbs-primary);
       color: #ffffff;
       font-weight: 700;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.35);
+      box-shadow: 0 2px 10px rgba(14,165,233,0.3);
     }
     .btn-next-large {
-      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(6,182,212,0.2));
-      border: 1px solid var(--accent);
-      color: #38bdf8;
+      background: var(--mbs-primary);
+      border: none;
+      color: #ffffff;
       font-weight: 600;
+      box-shadow: 0 2px 10px rgba(14,165,233,0.25);
     }
     .btn-next-large:hover:not(:disabled) {
-      background: var(--accent);
+      background: var(--mbs-primary-dark);
       color: #ffffff;
     }
     .page-numbers {
@@ -539,7 +606,7 @@
     }
     .page-ellipsis {
       padding: 0 6px;
-      color: var(--muted);
+      color: var(--mbs-muted);
       font-weight: 600;
     }
     .page-size-selector {
@@ -548,11 +615,11 @@
       gap: 8px;
     }
     .page-size-selector select {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      color: var(--text);
+      background: #ffffff;
+      border: 1.5px solid var(--mbs-border);
+      color: var(--mbs-ink);
       padding: 6px 12px;
-      border-radius: 8px;
+      border-radius: var(--mbs-radius-sm);
       font-size: 0.82rem;
       outline: none;
       cursor: pointer;
@@ -563,17 +630,23 @@
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- HEADER — MyBestSim Official Look -->
 <header>
   <div class="header-inner">
-    <div class="logo">
-      <div class="logo-icon">📡</div>
-      eSIM Market <span>Dashboard</span>
-    </div>
-    <div class="header-meta">
-      Données : 18 fournisseurs · 5 056 offres · 54 destinations
-    </div>
-    <div class="header-badge">Test Recrutement – MyBestSim</div>
+    <a href="https://mybestsim.com" class="logo" target="_blank" rel="noopener">
+      <img src="logo_mybestsim.png" alt="MyBestSim" />
+      <div class="logo-text">
+        <span class="logo-brand">MyBestSim</span>
+        <span class="logo-sub">Comparateur eSIM indépendant</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="https://mybestsim.com/fr/" target="_blank">Comparateur eSIM</a>
+      <a href="https://mybestsim.com/fr/codes-promo-cartes-esim/" target="_blank">Codes promo</a>
+      <a href="https://mybestsim.com/fr/articles/" target="_blank">Blog</a>
+      <a href="#" class="active">📊 Dashboard Analyse</a>
+    </nav>
+    <div class="header-badge">Test Recrutement · Oumaima Hrete</div>
   </div>
 </header>
 
@@ -850,8 +923,10 @@
 </div>
 
 <footer>
-  Dashboard construit à partir des données MyBestSim — 18 fournisseurs · 5 056 offres · 54 destinations.<br />
-  Réalisé par <strong>Oumaima Hrete</strong> · Test de recrutement Développeur IA & Automatisation · 2026
+  <img src="logo_mybestsim.png" alt="MyBestSim" class="footer-logo" /><br/>
+  Dashboard analytique construit à partir des données <strong>MyBestSim</strong> — 18 fournisseurs · 5 056 offres · 54 destinations.<br />
+  Réalisé par <strong>Oumaima Hrete</strong> · Stagiaire Développeur IA &amp; Automatisation · Test de recrutement 2026<br/>
+  <a href="https://mybestsim.com" target="_blank">mybestsim.com</a>
 </footer>
 
 <script src="data.js"></script>
@@ -927,9 +1002,9 @@ const TOP_COUNTRIES = (window.__DASHBOARD_DATA__ && window.__DASHBOARD_DATA__.to
 // ═══════════════════════════════════════════════════════
 // CHART.JS DEFAULTS & GLOBAL THEMING
 // ═══════════════════════════════════════════════════════
-Chart.defaults.color = '#94a3b8';
-Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
-Chart.defaults.font.family = 'Inter';
+Chart.defaults.color = '#475569';
+Chart.defaults.borderColor = 'rgba(15,23,42,0.07)';
+Chart.defaults.font.family = 'Poppins';
 
 // ═══════════════════════════════════════════════════════
 // CHART 1 — Provider count (Bar chart vertical)
