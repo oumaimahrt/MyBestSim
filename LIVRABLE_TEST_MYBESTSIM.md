@@ -1,6 +1,6 @@
 # 🚀 Dossier de Rendu – Test de Recrutement MyBestSim
 **Candidature :** Stage Développeur IA & Automatisation (6 mois)  
-**Candidat(e) :** Oumaima Hrete  
+**Candidate :** Oumaima Hrete  
 **Date :** Octobre 2026  
 
 ---
