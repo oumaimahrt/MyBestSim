@@ -3,6 +3,8 @@
   "rewrites": [
     { "source": "/", "destination": "/dashboard/index.html" },
     { "source": "/dashboard", "destination": "/dashboard/index.html" },
-    { "source": "/article", "destination": "/article/article_seo_croisiere.html" }
+    { "source": "/articles/internet-croisiere-quelle-esim-choisir", "destination": "/article/index.html" },
+    { "source": "/internet-croisiere-quelle-esim-choisir", "destination": "/article/index.html" },
+    { "source": "/article", "destination": "/article/index.html" }
   ]
 }

@@ -11,7 +11,7 @@ Ce dépôt contient l'ensemble des livrables réalisés par **Oumaima Hrete** da
 ## 🌟 Liens Rapides des Livrables
 
 - 🚀 **Dashboard interactif en ligne :** [https://mybestsim-green.vercel.app](https://mybestsim-green.vercel.app) *(ou en local sur `http://localhost:8080/dashboard/`)*
-- 📄 **Article SEO complet (HTML en ligne) :** [https://mybestsim-green.vercel.app/article](https://mybestsim-green.vercel.app/article)
+- 📄 **Article SEO complet (HTML en ligne) :** [https://mybestsim-green.vercel.app/articles/internet-croisiere-quelle-esim-choisir](https://mybestsim-green.vercel.app/articles/internet-croisiere-quelle-esim-choisir)
 - 📝 **Article SEO (Markdown) :** [`article/article_seo_croisiere.md`](article/article_seo_croisiere.md)
 - ⚙️ **Pipeline d'importation Python :** [`import_pipeline.py`](import_pipeline.py)
 - 📋 **Dossier de rendu complet & Email :** [`LIVRABLE_TEST_MYBESTSIM.md`](LIVRABLE_TEST_MYBESTSIM.md)
@@ -68,7 +68,7 @@ L'article a été rédigé avec l'identité et le ton éditorial de MyBestSim (p
 - **SEO & AI Visibility :** Balisage structuré **Schema.org FAQPage (JSON-LD)** intégré pour maximiser les chances d'affichage en Rich Snippets Google et l'indexation par Google AI Overviews et ChatGPT.
 
 **Formats disponibles :**
-- Version web mise en page prête pour publication : [https://mybestsim-green.vercel.app/article](https://mybestsim-green.vercel.app/article) (ou [`article/index.html`](article/index.html))
+- Version web mise en page prête pour publication : [https://mybestsim-green.vercel.app/articles/internet-croisiere-quelle-esim-choisir](https://mybestsim-green.vercel.app/articles/internet-croisiere-quelle-esim-choisir) (ou [`article/index.html`](article/index.html))
 - Version Markdown : [`article/article_seo_croisiere.md`](article/article_seo_croisiere.md)
 
 ---
