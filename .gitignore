@@ -2,3 +2,11 @@
 *.log
 .gemini/
 __pycache__/
+
+# Documents confidentiels du recruteur & notes personnelles
+offre de stage/
+notes.md
+
+# Exports redondants à la racine (le vrai est dans dashboard/data.json)
+dashboard_data.json
+/data.json
