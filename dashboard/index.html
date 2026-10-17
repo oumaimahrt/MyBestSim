@@ -217,20 +217,24 @@
       margin-left: 4px;
     }
 
-    /* ── KPI CARDS — MyBestSim Style ───────────────────── */
+    /* ── KPI CARDS — MyBestSim Structured Layout ──────── */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.15rem;
+      margin-bottom: 2.2rem;
     }
     .kpi-card {
       background: #ffffff;
       border: 1px solid var(--mbs-border);
       border-radius: var(--mbs-radius);
-      padding: 1.4rem 1.5rem;
+      padding: 1.35rem 1.4rem;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 160px;
       transition: transform 0.22s, box-shadow 0.22s;
       box-shadow: var(--mbs-shadow);
     }
@@ -246,33 +250,80 @@
       height: 3px;
       background: linear-gradient(90deg, var(--mbs-primary), var(--mbs-accent));
     }
-    .kpi-label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--mbs-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+    .kpi-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
       margin-bottom: 0.5rem;
     }
+    .kpi-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .kpi-badge {
+      display: inline-block;
+      font-size: 0.66rem;
+      font-weight: 700;
+      color: #0284c7;
+      background: #e0f2fe;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+    .kpi-badge.bonus {
+      color: #059669;
+      background: #d1fae5;
+    }
+    .kpi-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.25;
+      margin-top: 2px;
+    }
+    .kpi-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #f0f7ff;
+      border: 1px solid #dbeafe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      opacity: 1; /* Crisp, vivid & 100% visible! */
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(14,165,233,0.08);
+      font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    }
     .kpi-value {
-      font-size: 1.9rem;
+      font-size: 2.05rem;
       font-weight: 800;
       letter-spacing: -0.03em;
-      background: linear-gradient(135deg, var(--mbs-primary-dark), var(--mbs-primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #0f172a;
+      margin: 0.35rem 0 0.45rem 0;
+      line-height: 1.1;
     }
-    .kpi-sub {
-      font-size: 0.76rem;
-      color: var(--mbs-muted-soft);
-      margin-top: 4px;
+    .kpi-footer {
+      display: flex;
+      align-items: center;
+      margin-top: auto;
     }
-    .kpi-icon {
-      position: absolute;
-      top: 1.4rem; right: 1.5rem;
-      font-size: 1.4rem;
-      opacity: 0.18;
+    .kpi-sub-pill {
+      display: inline-block;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-size: 0.74rem;
+      color: #475569;
+      font-weight: 500;
+      line-height: 1.3;
     }
 
     /* ── CHARTS GRID ───────────────────────────────────── */
@@ -575,11 +626,11 @@
     }
 
     .chart-card.tall {
-      min-height: 580px;
+      min-height: 640px;
     }
     .chart-box-tall {
       position: relative;
-      height: 540px;
+      height: 600px;
       width: 100%;
     }
     .chart-box-std {
@@ -710,40 +761,87 @@
   <div class="section-title" id="section-kpis">📊 Statistiques requises — Vue d'ensemble du catalogue (6 métriques obligatoires)</div>
   <div class="kpi-grid">
     <div class="kpi-card">
-      <div class="kpi-icon">📋</div>
-      <div class="kpi-label">① Total produits eSIM</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge">Métrique ①</span>
+          <div class="kpi-label">Total cartes eSIM</div>
+        </div>
+        <div class="kpi-icon-badge">📋</div>
+      </div>
       <div class="kpi-value">5 056</div>
-      <div class="kpi-sub">4 403 à volume fixe + 653 illimités</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">4 403 quota fixe + 653 illimités</span>
+      </div>
     </div>
+
     <div class="kpi-card">
-      <div class="kpi-icon">💸</div>
-      <div class="kpi-label">② Produits &gt; 100€</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge">Métrique ②</span>
+          <div class="kpi-label">Offres &gt; 100 €</div>
+        </div>
+        <div class="kpi-icon-badge">💎</div>
+      </div>
       <div class="kpi-value">56</div>
-      <div class="kpi-sub">forfaits illimités 30j & régionaux</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">Forfaits 30j illimités &amp; régionaux</span>
+      </div>
     </div>
+
     <div class="kpi-card">
-      <div class="kpi-icon">📉</div>
-      <div class="kpi-label">③ Prix le plus bas</div>
-      <div class="kpi-value">5.36€</div>
-      <div class="kpi-sub">Mexique, Indonésie & Inde</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge">Métrique ③</span>
+          <div class="kpi-label">Prix le plus bas</div>
+        </div>
+        <div class="kpi-icon-badge">🏷️</div>
+      </div>
+      <div class="kpi-value">5.36 €</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">Mexique, Indonésie &amp; Inde</span>
+      </div>
     </div>
+
     <div class="kpi-card">
-      <div class="kpi-icon">📈</div>
-      <div class="kpi-label">③ Prix le plus haut</div>
-      <div class="kpi-value">154.63€</div>
-      <div class="kpi-sub">offres quota : max 99.39€</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge">Métrique ③</span>
+          <div class="kpi-label">Prix le plus haut</div>
+        </div>
+        <div class="kpi-icon-badge">📈</div>
+      </div>
+      <div class="kpi-value">154.63 €</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">Offres quota : max 99.39 €</span>
+      </div>
     </div>
+
     <div class="kpi-card">
-      <div class="kpi-icon">📡</div>
-      <div class="kpi-label">④ Moyenne data / carte</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge">Métrique ④</span>
+          <div class="kpi-label">Moyenne data / carte</div>
+        </div>
+        <div class="kpi-icon-badge">📡</div>
+      </div>
       <div class="kpi-value">14.49 Go</div>
-      <div class="kpi-sub">sur 4 403 offres à volume (1-50 Go)</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">Sur 4 403 offres à volume fixe</span>
+      </div>
     </div>
+
     <div class="kpi-card">
-      <div class="kpi-icon">💶</div>
-      <div class="kpi-label">⑤ Prix moyen global</div>
-      <div class="kpi-value">29.30€</div>
-      <div class="kpi-sub">quota : 24.63€ · illimité : 60.81€</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge">Métrique ⑤</span>
+          <div class="kpi-label">Prix moyen global</div>
+        </div>
+        <div class="kpi-icon-badge">💶</div>
+      </div>
+      <div class="kpi-value">29.30 €</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">Quota : 24.63 € · Illimité : 60.81 €</span>
+      </div>
     </div>
   </div>
 
@@ -751,34 +849,73 @@
   <div class="section-title">⭐ Bonus — Statistiques & Insights additionnels</div>
   <div class="kpi-grid">
     <div class="kpi-card">
-      <div class="kpi-icon">🏢</div>
-      <div class="kpi-label">⑥ Fournisseurs analysés</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge bonus">Métrique ⑥</span>
+          <div class="kpi-label">Fournisseurs analysés</div>
+        </div>
+        <div class="kpi-icon-badge">🏢</div>
+      </div>
       <div class="kpi-value">18</div>
-      <div class="kpi-sub">Airalo (722), Ubigi (562)... 4S (92)</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">Airalo (722), Ubigi (562)... 4S (92)</span>
+      </div>
     </div>
+
     <div class="kpi-card">
-      <div class="kpi-icon">🌍</div>
-      <div class="kpi-label">Destinations couvertes</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge bonus">Bonus</span>
+          <div class="kpi-label">Destinations couvertes</div>
+        </div>
+        <div class="kpi-icon-badge">🌍</div>
+      </div>
       <div class="kpi-value">54</div>
-      <div class="kpi-sub">pays & grandes régions du monde</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">Pays &amp; grandes régions du monde</span>
+      </div>
     </div>
+
     <div class="kpi-card">
-      <div class="kpi-icon">⚡</div>
-      <div class="kpi-label">Couverture 5G</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge bonus">Bonus</span>
+          <div class="kpi-label">Couverture 5G</div>
+        </div>
+        <div class="kpi-icon-badge">⚡</div>
+      </div>
       <div class="kpi-value">34.7%</div>
-      <div class="kpi-sub">1 754 offres avec réseau 5G</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">1 754 offres avec réseau 5G</span>
+      </div>
     </div>
+
     <div class="kpi-card">
-      <div class="kpi-icon">🔄</div>
-      <div class="kpi-label">Offres rechargeables</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge bonus">Bonus</span>
+          <div class="kpi-label">Offres rechargeables</div>
+        </div>
+        <div class="kpi-icon-badge">🔄</div>
+      </div>
       <div class="kpi-value">54.2%</div>
-      <div class="kpi-sub">2 738 offres avec top-up actif</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">2 738 offres avec top-up actif</span>
+      </div>
     </div>
+
     <div class="kpi-card">
-      <div class="kpi-icon">💰</div>
-      <div class="kpi-label">Meilleur €/Go moyen</div>
-      <div class="kpi-value">2.90€</div>
-      <div class="kpi-sub">JamboSIM · moy. marché 3.22€</div>
+      <div class="kpi-header">
+        <div class="kpi-meta">
+          <span class="kpi-badge bonus">Bonus</span>
+          <div class="kpi-label">Meilleur €/Go moyen</div>
+        </div>
+        <div class="kpi-icon-badge">🏆</div>
+      </div>
+      <div class="kpi-value">2.90 €</div>
+      <div class="kpi-footer">
+        <span class="kpi-sub-pill">JamboSIM · moy. marché 3.22 €</span>
+      </div>
     </div>
   </div>
 
@@ -1104,26 +1241,54 @@ new Chart(document.getElementById('chartProviderCount'), {
 });
 
 // ═══════════════════════════════════════════════════════
+// INLINE PLUGIN — Direct value labels at bar tips
+// ═══════════════════════════════════════════════════════
+const barValuePlugin = {
+  id: 'barValuePlugin',
+  afterDatasetsDraw(chart) {
+    if (chart.canvas.id !== 'chartPricePerGb' && chart.canvas.id !== 'chart5g') return;
+    const { ctx } = chart;
+    chart.data.datasets.forEach((dataset, i) => {
+      const meta = chart.getDatasetMeta(i);
+      meta.data.forEach((bar, index) => {
+        const val = dataset.data[index];
+        if (val === undefined || val === null) return;
+        const text = chart.canvas.id === 'chartPricePerGb' 
+          ? val.toFixed(2) + ' €/Go' 
+          : val.toFixed(1) + '%';
+        ctx.save();
+        ctx.font = '700 12px "Poppins", -apple-system, sans-serif';
+        ctx.fillStyle = '#0f172a';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, bar.x + 8, bar.y);
+        ctx.restore();
+      });
+    });
+  }
+};
+Chart.register(barValuePlugin);
+
+// ═══════════════════════════════════════════════════════
 // CHART 2 — Price per GB (Bar chart horizontal - ZERO CLIPPING)
 // ═══════════════════════════════════════════════════════
 const sortedByPPG = [...providers].sort((a,b) => PROVIDER_STATS[a].avg_price_per_gb - PROVIDER_STATS[b].avg_price_per_gb);
 new Chart(document.getElementById('chartPricePerGb'), {
   type: 'bar',
   data: {
-    labels: sortedByPPG.map(p => p.charAt(0).toUpperCase() + p.slice(1)),
+    labels: sortedByPPG,
     datasets: [{
       data: sortedByPPG.map(p => PROVIDER_STATS[p].avg_price_per_gb),
       backgroundColor: sortedByPPG.map((p, i) => {
         const ratio = i / sortedByPPG.length;
-        return `hsl(${145 - ratio * 100}, 80%, 45%, 0.85)`;
+        return `hsl(${145 - ratio * 100}, 85%, 44%, 0.88)`;
       }),
       borderColor: sortedByPPG.map((p, i) => {
         const ratio = i / sortedByPPG.length;
-        return `hsl(${145 - ratio * 100}, 85%, 38%)`;
+        return `hsl(${145 - ratio * 100}, 90%, 35%)`;
       }),
       borderWidth: 1.5,
       borderRadius: 6,
-      barThickness: 16,
+      barThickness: 17,
     }]
   },
   options: {
@@ -1131,7 +1296,7 @@ new Chart(document.getElementById('chartPricePerGb'), {
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-      padding: { left: 15, right: 35, top: 10, bottom: 10 }
+      padding: { left: 20, right: 65, top: 12, bottom: 12 }
     },
     plugins: {
       legend: { display: false },
@@ -1144,13 +1309,13 @@ new Chart(document.getElementById('chartPricePerGb'), {
     scales: {
       x: {
         grid: { color: 'rgba(15, 23, 42, 0.06)' },
-        min: 2.6,
-        max: 3.8,
+        min: 2.5,
+        max: 4.1,
         ticks: {
-          stepSize: 0.2,
+          stepSize: 0.3,
           callback: v => Number(v).toFixed(2) + ' €',
           color: '#475569',
-          font: { size: 11.5, weight: '600', family: 'Poppins' },
+          font: { size: 11.5, weight: '600', family: "'Poppins', sans-serif" },
           maxRotation: 0,
           autoSkip: false
         }
@@ -1160,8 +1325,8 @@ new Chart(document.getElementById('chartPricePerGb'), {
         ticks: {
           autoSkip: false,
           color: '#0f172a',
-          font: { size: 13, weight: '700', family: 'Poppins' },
-          padding: 12
+          font: { size: 13.5, weight: '700', family: "'Poppins', -apple-system, sans-serif" },
+          padding: 14
         }
       }
     }
@@ -1175,14 +1340,14 @@ const sortedBy5g = [...providers].sort((a,b) => PROVIDER_STATS[b].pct_5g - PROVI
 new Chart(document.getElementById('chart5g'), {
   type: 'bar',
   data: {
-    labels: sortedBy5g.map(p => p.charAt(0).toUpperCase() + p.slice(1)),
+    labels: sortedBy5g,
     datasets: [{
       data: sortedBy5g.map(p => PROVIDER_STATS[p].pct_5g),
-      backgroundColor: sortedBy5g.map((_, i) => `rgba(14, 165, 233, ${0.45 + (sortedBy5g.length - i) / sortedBy5g.length * 0.5})`),
+      backgroundColor: sortedBy5g.map((_, i) => `rgba(14, 165, 233, ${0.55 + (sortedBy5g.length - i) / sortedBy5g.length * 0.45})`),
       borderColor: '#0284c7',
       borderWidth: 1.5,
       borderRadius: 6,
-      barThickness: 16,
+      barThickness: 17,
     }]
   },
   options: {
@@ -1190,7 +1355,7 @@ new Chart(document.getElementById('chart5g'), {
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-      padding: { left: 15, right: 35, top: 10, bottom: 10 }
+      padding: { left: 20, right: 65, top: 12, bottom: 12 }
     },
     plugins: {
       legend: { display: false },
@@ -1204,12 +1369,12 @@ new Chart(document.getElementById('chart5g'), {
       x: {
         grid: { color: 'rgba(15, 23, 42, 0.06)' },
         min: 0,
-        max: 50,
+        max: 55,
         ticks: {
           stepSize: 10,
           callback: v => v + '%',
           color: '#475569',
-          font: { size: 11.5, weight: '600', family: 'Poppins' },
+          font: { size: 11.5, weight: '600', family: "'Poppins', sans-serif" },
           maxRotation: 0
         }
       },
@@ -1218,8 +1383,8 @@ new Chart(document.getElementById('chart5g'), {
         ticks: {
           autoSkip: false,
           color: '#0f172a',
-          font: { size: 13, weight: '700', family: 'Poppins' },
-          padding: 12
+          font: { size: 13.5, weight: '700', family: "'Poppins', -apple-system, sans-serif" },
+          padding: 14
         }
       }
     }
@@ -1711,6 +1876,15 @@ window.addEventListener('scroll', () => {
 
 // Launch
 initData();
+
+// Ensure charts re-render once Poppins font is loaded
+if (document.fonts) {
+  document.fonts.ready.then(() => {
+    if (window.Chart && Chart.instances) {
+      Object.values(Chart.instances).forEach(c => c.update());
+    }
+  });
+}
 
 </script>
 </body>
