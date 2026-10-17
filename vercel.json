@@ -1,7 +1,7 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/dashboard/index.html" },
+    { "source": "/", "destination": "/article/index.html" },
     { "source": "/dashboard", "destination": "/dashboard/index.html" },
     { "source": "/articles/internet-croisiere-quelle-esim-choisir", "destination": "/article/index.html" },
     { "source": "/internet-croisiere-quelle-esim-choisir", "destination": "/article/index.html" },
