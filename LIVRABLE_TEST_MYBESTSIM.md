@@ -15,7 +15,7 @@
    - [Positionnement & Stratégie](#stratégie-et-intentions-de-recherche)
    - [Fichiers Livrés (.md et .html)](#fichiers-de-larticle)
 3. [Partie 3 : Méthodologie & Usage de l'IA](#partie-3--paragraphe-usage-de-lia)
-4. [Email Final Prêt à Envoyer à Etienne](#email-final-prêt-à-envoyer)
+
 
 ---
 
