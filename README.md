@@ -10,7 +10,7 @@ Ce dépôt contient l'ensemble des livrables réalisés par **Oumaima Hrete** da
 
 ## 🌟 Liens Rapides des Livrables
 
-- 🚀 **Dashboard interactif en ligne :** [https://mybestsim-green.vercel.app](https://mybestsim-green.vercel.app) *(ou en local sur `http://localhost:8080/dashboard/`)*
+- 🚀 **Dashboard interactif en ligne :** [https://mybestsim-green.vercel.app/dashboard/](https://mybestsim-green.vercel.app/dashboard/) *(ou en local sur `http://localhost:8080/dashboard/`)*
 - 📄 **Article SEO complet (HTML en ligne) :** [https://mybestsim-green.vercel.app/articles/internet-croisiere-quelle-esim-choisir](https://mybestsim-green.vercel.app/articles/internet-croisiere-quelle-esim-choisir)
 - 📝 **Article SEO (Markdown) :** [`article/article_seo_croisiere.md`](article/article_seo_croisiere.md)
 - ⚙️ **Pipeline d'importation Python :** [`import_pipeline.py`](import_pipeline.py)
